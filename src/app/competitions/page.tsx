@@ -4,145 +4,128 @@ import React, { useState } from 'react';
 import { Container } from '@/components/Container';
 import Image from 'next/image';
 
-// Competition card component
+
 const CompetitionCard = ({ id, dates, title, description }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="overflow-hidden rounded-lg mb-6">
-      {/* Outer gray container */}
-      <div className="bg-gray-300 rounded-lg">
-        {/* Black top section with logo */}
-        <div className="bg-gray-800 p-5 flex justify-center items-center">
-          <div className="relative flex items-center justify-center">
-            <Image
-              src="/dignatera.png"
-              alt="DIGNATERA"
-              width={300}
-              height={50}
-              style={{ objectFit: 'contain' }}
-            />
-            {/* If you need the purple triangle, add it back here */}
-            <div className="absolute left-[-30px]">
-              {/* <div className="w-0 h-0 border-solid border-t-[12px] border-b-[12px] border-l-[20px]
-                           border-t-transparent border-b-transparent border-l-purple-500" /> */}
-            </div>
-          </div>
-        </div>
-
-        {/* Light gray bottom section — now the hover trigger */}
+    <div 
+      className="rounded-lg overflow-hidden mb-6 flex flex-col bg-gray-300"
+      style={{ height: '300px' }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div 
+        className={`bg-gray-800 transition-all duration-300 flex justify-center items-center overflow-hidden`}
+        style={{ height: isHovered ? '80px' : '150px' }}
+      >
         <div
-          className="relative p-8"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          className="relative flex items-center justify-center transition-transform duration-300"
         >
-          {/* Visible content */}
-          <div className="text-xs text-gray-500 mb-2">{dates}</div>
-          <div className="text-sm text-gray-800 font-medium">{title}</div>
+          <Image
+            src="/dignatera.png"
+            alt="DIGNATERA"
+            width={400}
+            height={50}
+            style={{ objectFit: 'contain' }}
+          />
+        </div>
+      </div>
+      <div 
+        className="relative transition-all duration-300 flex-1 overflow-hidden p-8"
+        style={{ height: isHovered ? '220px' : '150px' }}
+      >
+        { !isHovered && (
+          <div className="transition-opacity duration-300 opacity-100">
+            <div className="text-xs text-gray-500 mb-2">{dates}</div>
+            <div className="text-sm text-gray-800 font-medium">{title}</div>
+          </div>
+        )}
 
-          {/* Hover overlay (only appears when bottom section is hovered) */}
-          <div
-            className={`
-              absolute inset-0 bg-gray-200 flex flex-col justify-start text-center p-2
-              transition-opacity duration-300
-              ${isHovered ? 'opacity-100' : 'opacity-0'}
-            `}
+        { isHovered && (
+          <div 
+            className="absolute inset-0 bg-gray-200 flex flex-col justify-start text-center p-2 transition-opacity duration-300 opacity-100"
           >
             <div className="text-gray-600 font-medium mt-2">Дата проведения</div>
             <div className="text-purple-600 text-sm mb-2">{dates}</div>
             
             <div className="text-gray-600 font-medium">Дата регистрации</div>
-            <div className="text-purple-600 text-sm mb-2">
-              1 января 1110 - 1 февраля 1110
-            </div>
+            <div className="text-purple-600 text-sm mb-2">1 января 2025 - 1 февраля 2025</div>
             
-            <div className="text-gray-600 font-medium">Название категории</div>
-            <div className="text-gray-800 text-sm mb-2">{title}</div>
+            <div className="text-gray-600 font-medium">{title}</div>
             
             <div className="text-gray-600 font-medium">Возраст участников</div>
             <div className="text-gray-800 text-sm mb-2">18+</div>
-            
-            <a 
-              href="http://www.link.ru" 
-              target="_blank"
-              rel="noopener noreferrer" 
-              className="text-purple-600 hover:underline"
-            >
-              www.link.ru
-            </a>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
 };
 
-// Sample competition data
+//data
 const COMPETITIONS = [
   {
     id: 1,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
   },
   {
     id: 2,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
   },
   {
     id: 3,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
   },
   {
     id: 4,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
   },
   {
     id: 5,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
   },
   {
     id: 6,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
   },
   {
     id: 7,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
   },
   {
     id: 8,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
   },
   {
     id: 9,
-    dates: '1 января 1111 - 1 февраля 1111',
+    dates: '20 января 2025 - 20 февраля 2025',
     title: 'Название соревнования',
     description: 'Описание соревнования.'
-  }
+  },
 ];
 
-// Main competitions page component
 export default function CompetitionsPage() {
   return (
     <div className="py-12">
       <Container>
-        <h1 className="text-3xl font-bold text-center mb-12">Соревнования</h1>
-        
-        {/* Grid layout with 3 columns on desktop, 2 on tablet, 1 on mobile */}
+        <h1 className="text-5xl font-bold text-center mb-12">Соревнования</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {COMPETITIONS.map((competition) => (
             <CompetitionCard

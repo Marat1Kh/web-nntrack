@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { Container } from '@/components/Container';
 
 export const Navbar = () => {
-  const [language, setLanguage] = useState<'en' | 'ru'>('en');
+  const [language, setLanguage] = useState<'ru' | 'en'>('ru');
   const pathname = usePathname();
 
   const toggleLanguage = () => {
