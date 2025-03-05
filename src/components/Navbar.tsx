@@ -18,7 +18,7 @@ export const Navbar = () => {
     { label: language === 'en' ? 'Competitions' : 'Соревнования', href: '/competitions' },
     { label: language === 'en' ? 'Approbation' : 'Апробация', href: '/approbation' },
     { label: language === 'en' ? 'Knowledge Base' : 'База знаний', href: '/knowledge-base' },
-    { label: language === 'en' ? 'What\'s New' : 'Что нового', href: '/whats-new' },
+    { label: language === 'en' ? 'What\'s New' : 'Что нового', href: '/patchnote' },
     { label: 'FAQ', href: '/faq' },
   ];
 
