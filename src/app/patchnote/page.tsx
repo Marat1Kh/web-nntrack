@@ -2,10 +2,10 @@
 
 import { Container } from "@/components/Container";
 
-export default function Faq() {
-return (
+export default function Patchnote() {
+  return (
     <Container>
-    <h1>FAQ page</h1>
+      <h1>Patchnote page</h1>
     </Container>
-)
+  );
 }
