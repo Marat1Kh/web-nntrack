@@ -12,7 +12,6 @@ export const Navbar = () => {
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'ru' : 'en');
-    // Implement your language change logic here
   };
 
   const navItems = [
@@ -33,8 +32,6 @@ export const Navbar = () => {
               <Image src="/logo.png" alt="NN" width={200} height={80} priority />
             </Link>
           </div>
-
-          {/* Center: Navigation items */}
           <div className="hidden md:flex space-x-[49px]">
             {navItems.map((item) => (
               <Link 
@@ -48,8 +45,6 @@ export const Navbar = () => {
               </Link>
             ))}
           </div>
-
-          {/* Right: Language toggle */}
           <div>
             <button onClick={toggleLanguage} className="flex items-center justify-center">
               <Image 

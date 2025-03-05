@@ -141,7 +141,7 @@ export default function MapsPage() {
     <>
       {/* Load Yandex Maps script first */}
       <Script
-        src="https://api-maps.yandex.ru/2.1/?lang=en_RU&amp;apikey=64fa6e23-cbd9-4983-bbe7-67c2788eed4a"
+        src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=64fa6e23-cbd9-4983-bbe7-67c2788eed4a"
         strategy="beforeInteractive"
       />
       {/* Main container with border */}

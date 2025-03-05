@@ -10,9 +10,7 @@ export const Footer: React.FC = () => {
     <footer className="bg-black text-white py-8">
       <Container>
         <div className="flex flex-col">
-          {/* Main content area */}
           <div className="flex flex-col md:flex-row mb-10 items-start">
-            {/* NNTrack Logo */}
             <div className="mb-8 md:mb-0 flex-shrink-0">
               <Image
                 src="/nntrackk.png"
@@ -22,13 +20,9 @@ export const Footer: React.FC = () => {
                 style={{ objectFit: 'contain' }}
               />
             </div>
-
-            {/* Spacer of 133px */}
             <div className="hidden md:block w-[133px]"></div>
 
-            {/* Three columns with headings */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
-              {/* Social Media */}
               <div className="text-center md:text-left md:pr-[105px]">
               <h3 className="text-lg font-normal mb-4 uppercase whitespace-nowrap">
                 Наши соцсети
@@ -41,7 +35,6 @@ export const Footer: React.FC = () => {
                   className="inline-block"
                 >
                   <div className="bg-transparent border border-gray-700 rounded-full w-10 h-10 flex items-center justify-center">
-                    {/* Telegram icon */}
                     <svg
                       className="fill-current text-white"
                       xmlns="http://www.w3.org/2000/svg"
@@ -65,8 +58,6 @@ export const Footer: React.FC = () => {
                 <p className="mb-1 font-normal whitespace-nowrap">+7 (999) 999-99-99</p>
                 <p className="mb-1 font-normal">hello@nntrack.ru</p>
               </div>
-
-              {/* Site Sections */}
               <div className="text-center md:text-left">
                 <h3 className="text-lg font-normal mb-3 uppercase">
                   Разделы сайта
@@ -108,8 +99,6 @@ export const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-          
-          {/* Bottom row with copyright and robo logo */}
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0 text-sm text-gray-400">
               ООО «Брейн Девелопмент». 2025 год. Все права защищены

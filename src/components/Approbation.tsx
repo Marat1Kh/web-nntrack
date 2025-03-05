@@ -28,24 +28,18 @@ const FlowDiagram: React.FC = () => {
   } | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
-
-  // Shape refs
   const shapeRefs = useRef<Map<string, SVGGElement>>(new Map());
   const draggableInstances = useRef<Map<string, Draggable>>(new Map());
   const portOffsets = {
     left: { x: 0, y: 25 },
     right: { x: 80, y: 25 },
   };
-
-  // Update window size
+  
   useEffect(() => {
-    // Set initial size
     setWindowSize({
       width: window.innerWidth,
       height: window.innerHeight
     });
-
-    // Handle resize
     const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,
@@ -56,8 +50,6 @@ const FlowDiagram: React.FC = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // Auto-hide sidebar on small screens
   useEffect(() => {
     if (windowSize.width < 768) {
       setSidebarOpen(false);
@@ -170,28 +162,21 @@ const FlowDiagram: React.FC = () => {
   const addShape = (type: string) => {
     const id = `shape-${Date.now()}`;
     const canvasRect = canvasRef.current?.getBoundingClientRect();
-    
-    // Calculate position based on canvas size and device
     const isMobile = windowSize.width < 768;
     const centerX = canvasRect ? canvasRect.width / 2 - 40 : 100;
     const y = canvasRect ? 100 + (shapes.length * 20) % 300 : 100;
     
-    // On mobile, close sidebar after adding a shape
     if (isMobile) {
       setSidebarOpen(false);
     }
     
-    // Add console log for debugging
-    console.log(`Adding shape: ${type} at position (${centerX}, ${y})`);
-    
-    // Update the shapes state
+    // console.log(`Adding shape: ${type} at position (${centerX}, ${y})`);
     setShapes(prev => [...prev, {
       id,
       type,
       position: { x: centerX, y: y }
     }]);
-    
-    // Force an update of the lines after a short delay
+  
     setTimeout(() => {
       updateLines();
     }, 100);
@@ -214,8 +199,6 @@ const FlowDiagram: React.FC = () => {
     if (!canvasRect) return;
     
     let clientX, clientY;
-    
-    // Handle both mouse and touch events
     if ('touches' in e) {
       clientX = e.touches[0].clientX;
       clientY = e.touches[0].clientY;
@@ -278,7 +261,6 @@ const FlowDiagram: React.FC = () => {
     setIsCreatingLine(null);
   };
 
-  // Function to render shape based on type
   const renderShapeByType = (type: string) => {
     switch(type) {
       case "MaxPooling2D":
@@ -336,13 +318,10 @@ const FlowDiagram: React.FC = () => {
 
   useEffect(() => {
     console.log('Shapes updated:', shapes);
-    // Add a small delay to ensure DOM elements are created before making them draggable
     setTimeout(() => {
       shapes.forEach(shape => {
         makeShapeDraggable(shape.id);
       });
-      
-      // Update lines
       updateLines();
     }, 50);
   }, [shapes, lines]);
@@ -359,7 +338,6 @@ const FlowDiagram: React.FC = () => {
   const [activePanel, setActivePanel] = useState('shapes');
   return (
     <div className="flex flex-col md:flex-row min-h-screen relative">
-      {/* Toggle Sidebar Button (Mobile) */}
       <button 
         className="md:hidden fixed top-4 left-4 z-50 bg-purple-700 text-white p-2 rounded-full shadow-lg"
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -367,13 +345,11 @@ const FlowDiagram: React.FC = () => {
         {sidebarOpen ? '×' : '≡'}
       </button>
 
-   {/* LEFT SIDEBAR */}
 <aside 
   className={`w-full md:w-64 bg-gradient-to-b from-purple-800 to-purple-600 shadow-lg transition-all duration-300 z-40 ${
     sidebarOpen ? 'h-auto' : 'h-0 md:h-auto overflow-hidden'
   } ${sidebarOpen ? 'p-6' : 'p-0 md:p-6'}`}
 >
-  {/* Toggle buttons */}
   <div className="flex items-center space-x-2 mb-4 md:mb-6">
     <button 
       className={`text-l font-bold text-white px-1 py-1 rounded-lg transition-all ${
@@ -523,8 +499,6 @@ const FlowDiagram: React.FC = () => {
                 />
               </g>
             ))}
-            
-            {/* Temporary line while creating connection */}
             {isCreatingLine && (
               <line
                 id="temp-line"
@@ -539,8 +513,6 @@ const FlowDiagram: React.FC = () => {
               />
             )}
           </svg>
-
-          {/* SVG for shapes */}
           <svg className="absolute inset-0 pointer-events-none" width="100%" height="100%">
             {shapes.map((shape) => (
               <g
