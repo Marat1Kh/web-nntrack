@@ -11,23 +11,25 @@ export default function FAQItem({ item }: FAQItemProps) {
 
     return (
         <div className={styles.faqItem}>
-        <div
-            className={styles.faqQuestion}
-    onClick={() => setIsOpen(!isOpen)}
->
-    <span className={styles.bulletPoint}>•</span>
-    <h3>{item.question}</h3>
-    <span className={styles.arrow}>
-        {isOpen ? '▲' : '▼'}
+            <div
+                className={styles.faqQuestion}
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <span className={styles.bulletPoint}>•</span>
+                <h3>{item.question}</h3>
+                <span className={styles.arrow}>
+          {isOpen ? '▲' : '▼'}
         </span>
-        </div>
-
-    {isOpen && (
-        <div className={styles.faqAnswer}>
-            {item.answer}
             </div>
-    )}
-    <div className={styles.divider}></div>
+
+            {isOpen && (
+                <div className={styles.faqAnswer}>
+                    {item.answer}
+                </div>
+            )}
+
+            {/* Divider sau mỗi câu hỏi */}
+            <div className={styles.divider}></div>
         </div>
-);
+    );
 }

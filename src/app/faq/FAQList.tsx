@@ -9,10 +9,18 @@ interface FAQListProps {
 
 export default function FAQList({ items }: FAQListProps) {
     return (
-        <div className={styles.faqList}>
-            {items.map(item => (
+        <div className={styles.faqContainer}>
+            {/* Divider trên cùng */}
+            <div className={styles.divider}></div>
+
+            <div className={styles.faqList}>
+                {items.map((item, index) => (
                     <FAQItem key={item.id} item={item} />
-))}
-    </div>
-);
+                ))}
+            </div>
+
+            {/* Divider dưới cùng */}
+            {/*<div className={styles.divider}></div>*/}
+        </div>
+    );
 }
