@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Container } from '@/components/Container';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const Navbar = () => {
-  const [language, setLanguage] = useState<'ru' | 'en'>('ru');
+  const { language, setLanguage, t } = useLanguage();
   const pathname = usePathname();
 
   const toggleLanguage = () => {
@@ -15,11 +15,11 @@ export const Navbar = () => {
   };
 
   const navItems = [
-    { label: language === 'en' ? 'Competitions' : 'Соревнования', href: '/competitions' },
-    { label: language === 'en' ? 'Approbation' : 'Апробация', href: '/approbation' },
-    { label: language === 'en' ? 'Knowledge Base' : 'База знаний', href: '/knowledge-base' },
-    { label: language === 'en' ? 'What\'s New' : 'Что нового', href: '/patchnote' },
-    { label: 'FAQ', href: '/faq' },
+    { label: t('nav.competitions'), href: '/competitions' },
+    { label: t('nav.approbation'), href: '/maps' },
+    { label: t('nav.knowledgeBase'), href: '/knowledge-base' },
+    { label: t('nav.whatsNew'), href: '/patchnote' },
+    { label: t('nav.faq'), href: '/faq' },
   ];
 
   return (

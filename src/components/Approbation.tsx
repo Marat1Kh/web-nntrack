@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
+
 gsap.registerPlugin(Draggable);
 
 interface ShapeData {
@@ -16,6 +17,28 @@ interface LineData {
   from: { shapeId: string; port: 'left' | 'right' };
   to: { shapeId: string; port: 'left' | 'right' };
 }
+
+// Add translations object
+const translations = {
+  en: {
+    features: {
+      intuitive: "intuitive interface",
+      flexibility: "flexibility of settings",
+      accessibility: "accessibility",
+      variety: "variety of tools",
+      performance: "high performance"
+    }
+  },
+  ru: {
+    features: {
+      intuitive: "интуитивный интерфейс",
+      flexibility: "гибкость настройки",
+      accessibility: "доступность",
+      variety: "разнообразие инструментов",
+      performance: "высокая производительность"
+    }
+  }
+};
 
 const FlowDiagram: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,6 +57,10 @@ const FlowDiagram: React.FC = () => {
     left: { x: 0, y: 25 },
     right: { x: 80, y: 25 },
   };
+  
+  // Add language state (default to Russian)
+  const [language, setLanguage] = useState<'en' | 'ru'>('ru');
+  const [activePanel, setActivePanel] = useState('shapes');
   
   useEffect(() => {
     setWindowSize({
@@ -335,9 +362,9 @@ const FlowDiagram: React.FC = () => {
       clearTimeout(timer);
     };
   }, [lines, windowSize]);
-  const [activePanel, setActivePanel] = useState('shapes');
+
   return (
-    <div className="flex flex-col md:flex-row min-h-screen relative">
+    <div className="flex flex-col md:flex-row min-h-screen relative w-full">
       <button 
         className="md:hidden fixed top-4 left-4 z-50 bg-purple-700 text-white p-2 rounded-full shadow-lg"
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -345,105 +372,125 @@ const FlowDiagram: React.FC = () => {
         {sidebarOpen ? '×' : '≡'}
       </button>
 
-<aside 
-  className={`w-full md:w-64 bg-gradient-to-b from-purple-800 to-purple-600 shadow-lg transition-all duration-300 z-40 ${
-    sidebarOpen ? 'h-auto' : 'h-0 md:h-auto overflow-hidden'
-  } ${sidebarOpen ? 'p-6' : 'p-0 md:p-6'}`}
->
-  <div className="flex items-center space-x-2 mb-4 md:mb-6">
-    <button 
-      className={`text-l font-bold text-white px-1 py-1 rounded-lg transition-all ${
-        activePanel === 'shapes' ? 'bg-purple-500 shadow-inner' : 'hover:bg-purple-700 hover:bg-opacity-5'
-      }`}
-      onClick={() => setActivePanel('shapes')}
-    >
-      Фигурки
-    </button>
-    <button 
-      className={`text-l font-bold text-white px-1 py-1 rounded-lg transition-all ${
-        activePanel === 'instructions' ? 'bg-purple-500 shadow-inner' : 'hover:bg-purple-700 hover:bg-opacity-5'
-      }`}
-      onClick={() => setActivePanel('instructions')}
-    >
-      Инструкции
-    </button>
-  </div>
+      {/* Feature boxes - leftmost column (hidden on mobile) */}
+      <div className="hidden md:flex flex-col gap-6 p-6 w-52">
+        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-lg">
+          {translations[language].features.intuitive}
+        </div>
+        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-lg">
+          {translations[language].features.flexibility}
+        </div>
+        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-lg">
+          {translations[language].features.accessibility}
+        </div>
+        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-lg">
+          {translations[language].features.variety}
+        </div>
+        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-lg">
+          {translations[language].features.performance}
+        </div>
+      </div>
 
-  {/* Shapes panel */}
-  <div className={`transition-all duration-300 ${activePanel === 'shapes' ? 'block' : 'hidden'}`}>
-    <ul className="space-y-2 md:space-y-3 overflow-y-auto max-h-[40vh] md:max-h-[50vh]">
-      <li 
-        className="p-2 md:p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transform hover:scale-105 transition-all shadow-md text-white font-medium flex items-center justify-between"
-        onClick={() => addShape("Conv2D")}
+      {/* Sidebar - middle column */}
+      <aside 
+        className={`w-full md:w-48 bg-purple-700 shadow-lg transition-all duration-300 z-40 ${
+          sidebarOpen ? 'h-auto' : 'h-0 md:h-auto overflow-hidden'
+        } ${sidebarOpen ? 'p-3' : 'p-0 md:p-3'}`}
       >
-        <span className="text-sm md:text-base">Conv2D</span>
-        <button className="w-5 h-5 md:w-6 md:h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-xs md:text-sm">+</button>
-      </li>
-      <li 
-        className="p-2 md:p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transform hover:scale-105 transition-all shadow-md text-white font-medium flex items-center justify-between"
-        onClick={() => addShape("ReLU")}
-      >
-        <span className="text-sm md:text-base">ReLU</span>
-        <button className="w-5 h-5 md:w-6 md:h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-xs md:text-sm">+</button>
-      </li>
-      <li 
-        className="p-2 md:p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transform hover:scale-105 transition-all shadow-md text-white font-medium flex items-center justify-between"
-        onClick={() => addShape("MaxPooling2D")}
-      >
-        <span className="text-sm md:text-base truncate pr-1">MaxPooling2D</span>
-        <button className="w-5 h-5 md:w-6 md:h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-xs md:text-sm flex-shrink-0">+</button>
-      </li>
-      <li 
-        className="p-2 md:p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transform hover:scale-105 transition-all shadow-md text-white font-medium flex items-center justify-between"
-        onClick={() => addShape("Flatten")}
-      >
-        <span className="text-sm md:text-base">Flatten</span>
-        <button className="w-5 h-5 md:w-6 md:h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-xs md:text-sm">+</button>
-      </li>
-      <li 
-        className="p-2 md:p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transform hover:scale-105 transition-all shadow-md text-white font-medium flex items-center justify-between"
-        onClick={() => addShape("Dense")}
-      >
-        <span className="text-sm md:text-base">Dense</span>
-        <button className="w-5 h-5 md:w-6 md:h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-xs md:text-sm">+</button>
-      </li>
-      <li 
-        className="p-2 md:p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transform hover:scale-105 transition-all shadow-md text-white font-medium flex items-center justify-between"
-        onClick={() => addShape("Dropout")}
-      >
-        <span className="text-sm md:text-base">Dropout</span>
-        <button className="w-5 h-5 md:w-6 md:h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-xs md:text-sm">+</button>
-      </li>
-      <li 
-        className="p-2 md:p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transform hover:scale-105 transition-all shadow-md text-white font-medium flex items-center justify-between"
-        onClick={() => addShape("Softmax")}
-      >
-        <span className="text-sm md:text-base">Softmax</span>
-        <button className="w-5 h-5 md:w-6 md:h-6 bg-purple-600 rounded-full text-white flex items-center justify-center text-xs md:text-sm">+</button>
-      </li>
-    </ul>
-  </div>
+        <div className="flex items-center space-x-3 mb-6 md:mb-6 px-2">
+          <button 
+            className={`text-md font-medium text-white px-4 py-2 rounded-lg transition-all ${
+              activePanel === 'shapes' ? 'bg-purple-500' : 'bg-purple-600 hover:bg-purple-500'
+            }`}
+            onClick={() => setActivePanel('shapes')}
+          >
+            Фигурки
+          </button>
+          <button 
+            className={`text-md font-medium text-white px-4 py-2 rounded-lg transition-all ${
+              activePanel === 'instructions' ? 'bg-purple-500' : 'bg-purple-600 hover:bg-purple-500'
+            }`}
+            onClick={() => setActivePanel('instructions')}
+          >
+            Инструкции
+          </button>
+        </div>
 
-  {/* Instructions panel */}
-  <div className={`transition-all duration-300 ${activePanel === 'instructions' ? 'block' : 'hidden'}`}>
-    <div className="text-xs md:text-sm text-purple-100 bg-purple-700 p-3 md:p-4 rounded-lg shadow-inner">
-      <ul className="space-y-1 md:space-y-2 list-disc pl-4">
-        <li>Нажмите на фигуру, чтобы добавить ее на холст</li>
-        <li>Перетаскивайте фигуры, чтобы разместить их</li>
-        <li>Нажмите на кружки портов для создания соединений</li>
-        <li>Дважды щелкните по фигуре, чтобы удалить ее и ее соединения</li>
-        <li>Наведите курсор на фигуру, чтобы увидеть кнопку удаления</li>
-        <li>Нажмите на линию, чтобы удалить ее</li>
-      </ul>
-    </div>
-  </div>
-</aside>
+        {/* Shapes panel */}
+        <div className={`transition-all duration-300 ${activePanel === 'shapes' ? 'block' : 'hidden'}`}>
+          <ul className="space-y-3 overflow-y-auto pr-1 max-h-[70vh]">
+            <li 
+              className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
+              onClick={() => addShape("Conv2D")}
+            >
+              <span className="text-base">Conv2D</span>
+              <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">+</button>
+            </li>
+            <li 
+              className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
+              onClick={() => addShape("ReLU")}
+            >
+              <span className="text-base">ReLU</span>
+              <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">+</button>
+            </li>
+            <li 
+              className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
+              onClick={() => addShape("MaxPooling2D")}
+            >
+              <span className="text-base text-sm">MaxPooling2D</span>
+              <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm flex-shrink-0">+</button>
+            </li>
+            <li 
+              className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
+              onClick={() => addShape("Flatten")}
+            >
+              <span className="text-base">Flatten</span>
+              <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">+</button>
+            </li>
+            <li 
+              className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
+              onClick={() => addShape("Dense")}
+            >
+              <span className="text-base">Dense</span>
+              <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">+</button>
+            </li>
+            <li 
+              className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
+              onClick={() => addShape("Dropout")}
+            >
+              <span className="text-base">Dropout</span>
+              <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">+</button>
+            </li>
+            <li 
+              className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
+              onClick={() => addShape("Softmax")}
+            >
+              <span className="text-base">Softmax</span>
+              <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">+</button>
+            </li>
+          </ul>
+        </div>
+
+        {/* Instructions panel */}
+        <div className={`transition-all duration-300 ${activePanel === 'instructions' ? 'block' : 'hidden'}`}>
+          <div className="text-xs md:text-sm text-purple-100 bg-purple-700 p-3 md:p-4 rounded-lg shadow-inner">
+            <ul className="space-y-1 md:space-y-2 list-disc pl-4">
+              <li>Нажмите на фигуру, чтобы добавить ее на холст</li>
+              <li>Перетаскивайте фигуры, чтобы разместить их</li>
+              <li>Нажмите на кружки портов для создания соединений</li>
+              <li>Дважды щелкните по фигуре, чтобы удалить ее и ее соединения</li>
+              <li>Наведите курсор на фигуру, чтобы увидеть кнопку удаления</li>
+              <li>Нажмите на линию, чтобы удалить ее</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
 
       {/* MAIN AREA */}
       <div
         ref={containerRef}
         className="relative flex-1 bg-white overflow-hidden"
-        style={{ minHeight: "calc(100vh - 60px)", background: "#f8f9fa" }}
+        style={{ minHeight: "calc(100vh - 60px)", maxWidth: "100%", background: "#f0f7ff" }}
       >
          {/* Notebook grid background */}
         <div className="absolute inset-0 pointer-events-none">
@@ -452,9 +499,9 @@ const FlowDiagram: React.FC = () => {
               <pattern id="grid" width="5" height="5" patternUnits="userSpaceOnUse">
                 <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" strokeWidth="0.2"/>
               </pattern>
-              <pattern id="notebook" width="18" height="18" patternUnits="userSpaceOnUse">
+              <pattern id="notebook" width="20" height="20" patternUnits="userSpaceOnUse">
                 <rect width="20" height="20" fill="url(#grid)" />
-                <path d="M 0 0 L 100 0 100 100 0 100 Z" fill="none" stroke="#6faaf2" strokeWidth="1.2" />
+                <path d="M 0 0 L 100 0 100 100 0 100 Z" fill="none" stroke="#6faaf2" strokeWidth="0.8" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#notebook)" />
