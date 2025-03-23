@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { CheckIcon } from 'lucide-react';
 import FlowDiagram from '@/components/Approbation';
+import Information from '@/components/Informations';
 
 export default function Home() {
   const { t, language } = useLanguage();
@@ -167,9 +168,10 @@ export default function Home() {
         </div> 
 
           {/* Approbation Flow Diagram Component */}
-          <div className="md:w-2/3 border border-gray-200 rounded-lg overflow-hidden bg-white shadow-md">
-            <div className="h-[600px] overflow-hidden">
+          <div className="w-full">
+            <div className="flex flex-col gap-8">
               <FlowDiagram />
+              <Information/>
             </div>
           </div>
       </Container>
