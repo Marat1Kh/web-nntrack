@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from "@/components/Navbar";
 import { Footer } from '@/components/Footer';
 import { LanguageProvider } from '@/context/LanguageContext';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,6 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://api-maps.yandex.ru/v3/?apikey=YOUR_API_KEY&lang=ru_RU"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className={inter.className}>
         <LanguageProvider>
           <Navbar />

@@ -13,7 +13,9 @@ export const Footer: React.FC = () => {
     <footer className="bg-black text-white py-8">
       <Container>
         <div className="flex flex-col">
+          {/* Top Section */}
           <div className="flex flex-col md:flex-row mb-10 items-start">
+            {/* Logo */}
             <div className="mb-8 md:mb-0 flex-shrink-0">
               <Image
                 src="/nntrackk.png"
@@ -21,16 +23,18 @@ export const Footer: React.FC = () => {
                 width={300}
                 height={80}
                 style={{ objectFit: 'contain' }}
+                className="w-40 md:w-[300px] h-auto"
               />
             </div>
             <div className="hidden md:block w-[133px]"></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
+            {/* Info Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 flex-1">
+              {/* Social Networks */}
               <div className="text-center md:text-left md:pr-[105px]">
-              <h3 className="text-lg font-normal mb-4 uppercase whitespace-nowrap">
-                {t('footer.socialNetworks')}
-              </h3>
-
+                <h3 className="text-lg font-normal mb-4 uppercase">
+                  {t('footer.socialNetworks')}
+                </h3>
                 <a 
                   href="https://t.me/nntrack" 
                   target="_blank" 
@@ -58,9 +62,10 @@ export const Footer: React.FC = () => {
                 <h3 className="text-lg font-normal mb-3 uppercase">
                   {t('footer.contacts')}
                 </h3>
-                <p className="mb-1 font-normal whitespace-nowrap">+7 (999) 999-99-99</p>
+                <p className="mb-1 font-normal">+7 (999) 999-99-99</p>
                 <p className="mb-1 font-normal">hello@nntrack.ru</p>
               </div>
+              {/* Site Sections */}
               <div className="text-center md:text-left">
                 <h3 className="text-lg font-normal mb-3 uppercase">
                   {t('footer.siteSections')}
@@ -102,11 +107,12 @@ export const Footer: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Bottom Section */}
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0 text-sm text-gray-400">
               {t('footer.copyright')}
             </div>
-            
             <div>
               <Image
                 src="/robo.png"
@@ -114,6 +120,7 @@ export const Footer: React.FC = () => {
                 width={100}
                 height={40}
                 style={{ objectFit: 'contain' }}
+                className="w-20 md:w-[100px] h-auto"
               />
             </div>
           </div>

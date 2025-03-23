@@ -101,7 +101,14 @@ export default {
     title: "Approbation",
     description: "Currently, NNTrack software is undergoing and conducting approbation in the following institutions:",
     institution: "Institution",
-    moreDetails: "More Details"
+    moreDetails: "More Details",
+    features: {
+      intuitive: "Intuitive Interface",
+      flexibility: "Settings Flexibility",
+      accessibility: "Accessibility",
+      variety: "Variety of Tools",
+      performance: "High Performance"
+    }
   },
   
   // What's New page
@@ -110,5 +117,43 @@ export default {
     version: "Version",
     trainingParameters: "Training Parameters",
     interfaceImprovements: "Interface Improvements and New Features"
+  },
+  
+  // Information page
+  information: {
+    lessons: "lessons",
+    exampleTopics: "Example Topics",
+    course: {
+      convolutionalNN: {
+        title: "Course: «Development and Training of Convolutional Neural Networks in NNTrack Visual Modeling Environment»",
+        point1: "will provide students with the opportunity to immerse themselves in the exciting world of deep learning",
+        point2: "practicing on various datasets, children will master the entire development cycle: from architecture design to results analysis",
+        topics: {
+          1: "What are AI and neural networks",
+          2: "Changing hyperparameters of convolutional neural network layers",
+          3: "Development of convolutional neural network architecture",
+          4: "Creative exercises in solving classification problems in NNTrack",
+          5: "Setting up convolutional neural network training",
+          6: "Experiments with selecting optimal layers and training parameters for convolutional neural network",
+          7: "Analysis of the developed model's performance",
+          8: "Study, development, training and testing of advanced convolutional neural network architectures"
+        }
+      },
+      aiBasics: {
+        title: "Course: «Learning the Basics of Artificial Intelligence»",
+        point1: "students will get acquainted with concepts such as: «human brain», «intelligence», «artificial intelligence»",
+        point2: "will form knowledge about the history of AI (including neural networks), the significance and prospects of using neural networks in the modern world, etc.",
+        topics: {
+          1: "Neural networks and MNIST databases",
+          2: "Neural networks and emotional intelligence",
+          3: "Neural networks and image classification",
+          4: "Emotion detection using speech recognition technology",
+          5: "Face detection. Finding 5 key facial points",
+          6: "Voice robots. How they work and what they can do",
+          7: "Neural networks and face recognition. FaceNet neural networks",
+          8: "Introduction to Natural Language Processing (NLP)"
+        }
+      }
+    }
   }
 };
