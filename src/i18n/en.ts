@@ -16,6 +16,50 @@ export default {
     homePage: "Home Page",
     copyright: "Brain Development LLC. 2025. All rights reserved"
   },
+
+  useCases: {
+    title: "Use Cases",
+    desktop: {
+      title: "On a Computer",
+      features: [
+        {
+          icon: "camera.png",
+          title: "Creating, Training, and Testing a Neural Network",
+          points: [
+            "Graphical interface",
+            "Testing a neural network with a webcam and images"
+          ]
+        },
+        {
+          icon: "api.png",
+          title: "Working with API",
+          points: [
+            "Sending neural network results to third-party applications",
+            "Creating various games and simulators with a neural network"
+          ]
+        }
+      ]
+    },
+    robots: {
+      title: "With Robots",
+      features: [
+        {
+          icon: "station.png",
+          title: "Stationary Robots",
+          points: [
+            "Transmitting neural network data from a computer to various controllers via a serial port"
+          ]
+        },
+        {
+          icon: "robot.png",
+          title: "Mobile Robots",
+          points: [
+            "Can move autonomously and use neural networks without a computer"
+          ]
+        }
+      ]
+    }
+  },
   
   // Competitions page
   competitions: {

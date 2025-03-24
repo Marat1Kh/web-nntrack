@@ -10,8 +10,6 @@ import Information from '@/components/Informations';
 
 export default function Home() {
   const { t, language } = useLanguage();
-
-  // Translations for the home page
   const translations = {
     en: {
       title: "Neural Network Track is a visual modeling environment for convolutional neural network architecture, its training and export for subsequent use on Artintrek hardware module",
@@ -169,7 +167,7 @@ export default function Home() {
 
           {/* Approbation Flow Diagram Component */}
           <div className="w-full">
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 ">
               <FlowDiagram />
               <Information/>
             </div>
