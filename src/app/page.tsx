@@ -58,7 +58,6 @@ export default function Home() {
   return (
     <main className="py-12 bg-white">
       <Container>
-        {/* Top Section: Title & Logo */}
         <div className="mb-12">
           <div className="flex items-start justify-between">
             <p className="text-black text-lg max-w-2xl">
@@ -75,20 +74,18 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* Middle Section: What NNTrack does */}
         <h2 className="text-3xl font-bold mb-8 text-black">
           {content.whatNNTrackDoes}
         </h2>
 
         <div className="flex flex-col lg:flex-row gap-8 items-start mb-16">
-          {/* Features List */}
+          {/* Features*/}
           <div className="flex-1">
             <div className="space-y-6">
-              {/* Feature 1 */}
+              {/* Feature*/}
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
-                  <CheckIcon size={16} className="text-white" />
+                <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                <span className="text-purple-600 text-3xl">✓</span>
                 </div>
                 <div>
                   <h3 className="font-medium text-lg text-black">
@@ -102,8 +99,8 @@ export default function Home() {
 
               {/* Feature 2 */}
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
-                  <CheckIcon size={16} className="text-white" />
+                <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                <span className="text-purple-600 text-3xl">✓</span>
                 </div>
                 <div>
                   <h3 className="font-medium text-lg text-black">
@@ -114,11 +111,10 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-
-              {/* Feature 3 */}
+              {/* Feature*/}
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
-                  <CheckIcon size={16} className="text-white" />
+                <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                <span className="text-purple-600 text-3xl">✓</span>
                 </div>
                 <div>
                   <h3 className="font-medium text-lg text-black">
@@ -129,11 +125,10 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-
-              {/* Feature 4 */}
+              {/* Feature*/}
               <div className="flex gap-4">
-                <div className="flex-shrink-0 w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
-                  <CheckIcon size={16} className="text-white" />
+                <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                <span className="text-purple-600 text-3xl">✓</span>
                 </div>
                 <div>
                   <h3 className="font-medium text-lg text-black">
@@ -152,7 +147,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Network Diagram on the Right */}
           <div className="flex-none">
             <Image
               src="/network_img.png"
@@ -164,8 +158,6 @@ export default function Home() {
             />
           </div>
         </div> 
-
-          {/* Approbation Flow Diagram Component */}
           <div className="w-full">
             <div className="flex flex-col gap-8 ">
               <FlowDiagram />

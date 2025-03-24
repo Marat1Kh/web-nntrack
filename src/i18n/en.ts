@@ -1,4 +1,4 @@
-export default {
+const en = {
   // Navigation
   nav: {
     competitions: "Competitions",
@@ -61,7 +61,7 @@ export default {
     }
   },
   
-  // Competitions page
+  // Competitions
   competitions: {
     title: "Competitions",
     eventDates: "Event Dates",
@@ -87,7 +87,7 @@ export default {
     }
   },
   
-  // FAQ page
+  // FAQ
   faq: {
     title: "Frequently Asked Questions",
     searchPlaceholder: "Write your question",
@@ -140,7 +140,7 @@ export default {
     ]
   },
   
-  // Maps/Approbation page
+  // Maps
   approbation: {
     title: "Approbation",
     description: "Currently, NNTrack software is undergoing and conducting approbation in the following institutions:",
@@ -201,3 +201,5 @@ export default {
     }
   }
 };
+
+export default en;

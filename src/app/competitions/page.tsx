@@ -5,14 +5,26 @@ import { Container } from '@/components/Container';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
-const CompetitionCard = ({ id, dates, registrationDates, title, description, participantsAge, teamSize, contactEmail, telegramChannel }) => {
+interface CompetitionCardProps {
+  id: number;
+  dates: string;
+  registrationDates: string;
+  title: string;
+  description: string;
+  participantsAge: string;
+  teamSize?: string;
+  contactEmail?: string;
+  telegramChannel?: string;
+}
+
+const CompetitionCard = ({ id, dates, registrationDates, title, description, participantsAge, teamSize, contactEmail, telegramChannel }: CompetitionCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const { t } = useLanguage();
 
   return (
     <div 
       className="rounded-lg overflow-hidden mb-6 flex flex-col bg-gray-300"
-      style={{ height: isHovered ? '400px' : '300px' }} // Increased height when hovered
+      style={{ height: isHovered ? '400px' : '300px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -24,7 +36,7 @@ const CompetitionCard = ({ id, dates, registrationDates, title, description, par
           className="relative flex items-center justify-center transition-transform duration-300"
         >
           <Image
-            src={"/dignatera.png"} // Using the same image for all competition cards
+            src={"/dignatera.png"}
             alt={title}
             width={400}
             height={50}
@@ -116,8 +128,51 @@ const COMPETITIONS = [
     teamSize: '',
     contactEmail: '',
     telegramChannel: ''
+  },
+  {
+    id: 3,
+    dates: '27 февраля 2025 - 25 апреля 2025',
+    registrationDates: '27 февраля 2025 - 25 апреля 2025',
+    title: 'Всероссийский Хакатон по Искусственному Интеллекту',
+    description: 'Организован совместно с Ассоциацией образовательных организаций «Консорциум по развитию школьного инженерно-технологического образования»!',
+    participantsAge: '7-11 класс',
+    teamSize: '1-3 человека',
+    contactEmail: 'hackathon@ingtech.info',
+    telegramChannel: 'https://t.me/+osTlcR2ByLJiOWIy'
+  },
+  {
+    id: 4,
+    dates: '20 января 2025 - 20 февраля 2025',
+    registrationDates: '1 января 2025 - 1 февраля 2025',
+    title: 'Название соревнования',
+    description: 'Описание соревнования.',
+    participantsAge: '18+',
+    teamSize: '',
+    contactEmail: '',
+    telegramChannel: ''
+  },
+  {
+    id: 5,
+    dates: '27 февраля 2025 - 25 апреля 2025',
+    registrationDates: '27 февраля 2025 - 25 апреля 2025',
+    title: 'Всероссийский Хакатон по Искусственному Интеллекту',
+    description: 'Организован совместно с Ассоциацией образовательных организаций «Консорциум по развитию школьного инженерно-технологического образования»!',
+    participantsAge: '7-11 класс',
+    teamSize: '1-3 человека',
+    contactEmail: 'hackathon@ingtech.info',
+    telegramChannel: 'https://t.me/+osTlcR2ByLJiOWIy'
+  },
+  {
+    id: 6,
+    dates: '20 января 2025 - 20 февраля 2025',
+    registrationDates: '1 января 2025 - 1 февраля 2025',
+    title: 'Название соревнования',
+    description: 'Описание соревнования.',
+    participantsAge: '18+',
+    teamSize: '',
+    contactEmail: '',
+    telegramChannel: ''
   }
-  // ... other competition items
 ];
 
 export default function CompetitionsPage() {

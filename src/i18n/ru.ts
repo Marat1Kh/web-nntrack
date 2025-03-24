@@ -1,4 +1,4 @@
-export default {
+const ru = {
   // Navigation
   nav: {
     competitions: "Соревнования",
@@ -201,3 +201,5 @@ export default {
     }
   }
 };
+
+export default ru;

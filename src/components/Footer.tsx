@@ -14,9 +14,9 @@ export const Footer: React.FC = () => {
       <Container>
         <div className="flex flex-col">
           {/* Top Section */}
-          <div className="flex flex-col md:flex-row mb-10 items-start">
+          <div className="flex flex-col md:flex-row mb-10 items-center md:items-start">
             {/* Logo */}
-            <div className="mb-8 md:mb-0 flex-shrink-0">
+            <div className="mb-8 md:mb-0 flex-shrink-0 mx-auto md:mx-0">
               <Image
                 src="/nntrackk.png"
                 alt="NNTrack Logo"

@@ -13,8 +13,6 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>('ru');
-
-  // Translation function that accepts dot notation path (e.g., 'nav.competitions')
   const t = (key: string): string => {
     const keys = key.split('.');
     let value: any = translations[language];

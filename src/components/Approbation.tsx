@@ -33,21 +33,15 @@ const FlowDiagram: React.FC = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
-
-  // We store references to each shape's <g> element so we can make them draggable
   const shapeRefs = useRef<Map<string, SVGGElement>>(new Map());
   const draggableInstances = useRef<Map<string, Draggable>>(new Map());
-
-  // Offsets for where the connection ports should be relative to each shape
   const portOffsets = {
     left: { x: 0, y: 25 },
     right: { x: 80, y: 25 },
   };
 
-  // Tabs in the sidebar
   const [activePanel, setActivePanel] = useState("shapes");
 
-  // Auto-set sidebar to hidden on mobile, visible on desktop
   useEffect(() => {
     function handleResize() {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
@@ -65,7 +59,6 @@ const FlowDiagram: React.FC = () => {
     }
   }, [windowSize]);
 
-  // Helper: get shape's current translate(x,y)
   const getShapePosition = (shapeId: string) => {
     const shapeEl = shapeRefs.current.get(shapeId);
     if (!shapeEl) return { x: 0, y: 0 };
@@ -81,12 +74,9 @@ const FlowDiagram: React.FC = () => {
     return { x: 0, y: 0 };
   };
 
-  // Helper: get absolute position for a port (left/right) on a shape
   const getPortPosition = (shapeId: string, port: "left" | "right") => {
     const shapePos = getShapePosition(shapeId);
     const offset = portOffsets[port];
-
-    // If shape <g> transform is 0,0, try using the shape’s stored state
     if (shapePos.x === 0 && shapePos.y === 0) {
       const shapeData = shapes.find((s) => s.id === shapeId);
       if (shapeData) {
@@ -102,10 +92,8 @@ const FlowDiagram: React.FC = () => {
     };
   };
 
-  // Update line positions so they remain connected to shapes
   const updateLines = () => {
-    // Wait for DOM to catch up if needed
-    const allElementsExist = lines.every((line) =>
+  const allElementsExist = lines.every((line) =>
       document.getElementById(`line-${line.id}`)
     );
     if (!allElementsExist) {
@@ -131,8 +119,6 @@ const FlowDiagram: React.FC = () => {
       hitAreaEl.setAttribute("x2", toPos.x.toString());
       hitAreaEl.setAttribute("y2", toPos.y.toString());
     });
-
-    // If currently creating a line, move the temp line’s end to cursor
     if (isCreatingLine) {
       const tempLine = document.getElementById("temp-line");
       if (!tempLine) return;
@@ -148,7 +134,6 @@ const FlowDiagram: React.FC = () => {
     }
   };
 
-  // Make a shape draggable using GSAP Draggable
   const makeShapeDraggable = (shapeId: string) => {
     const shapeEl = shapeRefs.current.get(shapeId);
     if (!shapeEl || draggableInstances.current.has(shapeId)) return;
@@ -157,7 +142,6 @@ const FlowDiagram: React.FC = () => {
       type: "x,y",
       onDrag: updateLines,
       onDragEnd: function () {
-        // Update shape position in state after drag
         setShapes((prev) =>
           prev.map((s) =>
             s.id === shapeId
@@ -171,17 +155,12 @@ const FlowDiagram: React.FC = () => {
     draggableInstances.current.set(shapeId, draggable);
   };
 
-  // Add a shape to the canvas
   const addShape = (type: string) => {
     const id = `shape-${Date.now()}`;
     const canvasRect = canvasRef.current?.getBoundingClientRect();
 
-    // Center new shape in the canvas horizontally
     const centerX = canvasRect ? canvasRect.width / 2 - 40 : 100;
-    // Slightly stagger shapes vertically
     const y = canvasRect ? 100 + ((shapes.length * 20) % 300) : 100;
-
-    // If on mobile, close sidebar after adding shape
     if (windowSize.width < 768) {
       setSidebarOpen(false);
     }
@@ -190,14 +169,11 @@ const FlowDiagram: React.FC = () => {
       ...prev,
       { id, type, position: { x: centerX, y: y } },
     ]);
-
-    // Let the DOM update, then refresh lines
     setTimeout(() => {
       updateLines();
     }, 100);
   };
 
-  // Start creating a connection from a shape’s port
   const startConnection = (
     shapeId: string,
     port: "left" | "right",
@@ -212,7 +188,6 @@ const FlowDiagram: React.FC = () => {
     });
   };
 
-  // Move the temp line endpoint to follow cursor/finger
   const updateTempLine = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isCreatingLine) return;
 
@@ -237,11 +212,8 @@ const FlowDiagram: React.FC = () => {
     });
   };
 
-  // Finish creating a connection by clicking another shape’s port
   const finishConnection = (shapeId: string, port: "left" | "right") => {
     if (!isCreatingLine) return;
-
-    // Don’t connect a shape to itself
     if (isCreatingLine.from.shapeId === shapeId) {
       setIsCreatingLine(null);
       return;
@@ -255,14 +227,11 @@ const FlowDiagram: React.FC = () => {
 
     setLines((prev) => [...prev, newLine]);
     setIsCreatingLine(null);
-
-    // Let the DOM update, then refresh lines
     setTimeout(() => {
       updateLines();
     }, 0);
   };
 
-  // Delete a shape (and all its lines)
   const deleteShape = (shapeId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setLines((prev) =>
@@ -271,26 +240,20 @@ const FlowDiagram: React.FC = () => {
       )
     );
     setShapes((prev) => prev.filter((shape) => shape.id !== shapeId));
-
-    // Kill GSAP Draggable instance
     if (draggableInstances.current.has(shapeId)) {
       draggableInstances.current.get(shapeId)?.kill();
       draggableInstances.current.delete(shapeId);
     }
   };
 
-  // Delete a line
   const deleteLine = (lineId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setLines((prev) => prev.filter((line) => line.id !== lineId));
   };
-
-  // Cancel line creation if user clicks outside
   const cancelLineCreation = () => {
     setIsCreatingLine(null);
   };
 
-  // Return an SVG <rect> for each shape type
   const renderShapeByType = (type: string) => {
     switch (type) {
       case "MaxPooling2D":
@@ -319,7 +282,6 @@ const FlowDiagram: React.FC = () => {
           />
         );
       default:
-        // E.g. ReLU, Dense, Dropout, Softmax...
         return (
           <rect
             width="80"
@@ -334,20 +296,16 @@ const FlowDiagram: React.FC = () => {
     }
   };
 
-  // Whenever shapes or lines change, re-init draggables and refresh lines
   useEffect(() => {
     shapes.forEach((shape) => {
       makeShapeDraggable(shape.id);
     });
-    // Slight delay to let the DOM update
     const timer = setTimeout(() => {
       updateLines();
     }, 50);
 
     return () => clearTimeout(timer);
   }, [shapes, lines]);
-
-  // Also refresh lines if window size changes
   useEffect(() => {
     const timer = setTimeout(() => {
       updateLines();
@@ -357,17 +315,15 @@ const FlowDiagram: React.FC = () => {
 
   return (
     <div className="relative flex flex-col md:flex-row gap-10">
-      {/* MOBILE SIDEBAR TOGGLE BUTTON (only shows on small screens) */}
       <div className="absolute top-2 right-2 md:hidden z-50">
         <button
-          className="bg-purple-600 text-white p-2 rounded-md"
+          className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
           onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label={sidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
         >
-          {sidebarOpen ? "Hide" : "Show"} Sidebar
+          {sidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
         </button>
       </div>
-
-      {/* Feature boxes - leftmost column (hidden on mobile) */}
       <div className="hidden md:flex w-1/4 h-[500px] flex-col justify-between gap-7">
         <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-base">
           {t("approbation.features.intuitive")}
@@ -386,21 +342,17 @@ const FlowDiagram: React.FC = () => {
         </div>
       </div>
 
-      {/* Middle column (Sidebar) + Right column (Canvas) */}
       <div className="flex flex-col md:flex-row w-full h-[500px]">
         {/* SIDEBAR */}
         <aside
           className={`h-full bg-purple-700 shadow-lg transition-all duration-300 z-40
             ${
               sidebarOpen
-                ? // Show on mobile: full width; on desktop: 1/3
-                  "block w-full md:w-1/3 p-3"
-                : // Hidden on mobile; always visible on desktop
-                  "hidden md:block w-1/3 p-0 md:p-3"
+                ? "block w-full md:w-1/3 p-3"
+                : "hidden md:block w-1/3 p-0 md:p-3"
             }
           `}
         >
-          {/* Tabs: Shapes vs. Instructions */}
           <div className="flex w-fit justify-between space-x-3 mb-6 px-2">
             <button
               className={`text-md font-medium text-white px-4 py-2 rounded-lg transition-all ${
@@ -427,69 +379,40 @@ const FlowDiagram: React.FC = () => {
           {/* Shapes Panel */}
           {activePanel === "shapes" && (
             <ul className="space-y-3 overflow-y-auto mx-3">
-              <li
-                className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
-                onClick={() => addShape("Conv2D")}
-              >
-                <span className="text-base">Conv2D</span>
-                <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">
-                  +
-                </button>
-              </li>
-              <li
-                className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
-                onClick={() => addShape("ReLU")}
-              >
-                <span className="text-base">ReLU</span>
-                <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">
-                  +
-                </button>
-              </li>
-              <li
-                className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
-                onClick={() => addShape("MaxPooling2D")}
-              >
-                <span className="text-base">MaxPooling2D</span>
-                <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">
-                  +
-                </button>
-              </li>
-              <li
-                className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
-                onClick={() => addShape("Flatten")}
-              >
-                <span className="text-base">Flatten</span>
-                <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">
-                  +
-                </button>
-              </li>
-              <li
-                className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
-                onClick={() => addShape("Dense")}
-              >
-                <span className="text-base">Dense</span>
-                <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">
-                  +
-                </button>
-              </li>
-              <li
-                className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
-                onClick={() => addShape("Dropout")}
-              >
-                <span className="text-base">Dropout</span>
-                <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">
-                  +
-                </button>
-              </li>
-              <li
-                className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
-                onClick={() => addShape("Softmax")}
-              >
-                <span className="text-base">Softmax</span>
-                <button className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm">
-                  +
-                </button>
-              </li>
+              {[
+                { type: "Conv2D", label: "Conv2D" },
+                { type: "ReLU", label: "ReLU" },
+                { type: "MaxPooling2D", label: "MaxPooling2D" },
+                { type: "Flatten", label: "Flatten" },
+                { type: "Dense", label: "Dense" },
+                { type: "Dropout", label: "Dropout" },
+                { type: "Softmax", label: "Softmax" },
+              ].map((shape) => (
+                <li
+                  key={shape.type}
+                  className="p-3 bg-purple-400 rounded-lg cursor-pointer hover:bg-purple-300 transition-all shadow-sm text-white font-medium flex items-center justify-between"
+                  onClick={() => {
+                    addShape(shape.type);
+                    if (windowSize.width < 768) {
+                      setSidebarOpen(false);
+                    }
+                  }}
+                >
+                  <span className="text-base">{shape.label}</span>
+                  <button 
+                    className="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-sm hover:bg-purple-600 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addShape(shape.type);
+                      if (windowSize.width < 768) {
+                        setSidebarOpen(false);
+                      }
+                    }}
+                  >
+                    +
+                  </button>
+                </li>
+              ))}
             </ul>
           )}
 
@@ -500,19 +423,13 @@ const FlowDiagram: React.FC = () => {
                 <li>Нажмите на фигуру, чтобы добавить ее на холст</li>
                 <li>Перетаскивайте фигуры, чтобы разместить их</li>
                 <li>Нажмите на кружки портов для создания соединений</li>
-                <li>
-                  Дважды щелкните по фигуре, чтобы удалить ее и ее соединения
-                </li>
-                <li>
-                  Наведите курсор на фигуру, чтобы увидеть кнопку удаления
-                </li>
+                <li>Дважды щелкните по фигуре, чтобы удалить ее и ее соединения</li>
+                <li>Наведите курсор на фигуру, чтобы увидеть кнопку удаления</li>
                 <li>Нажмите на линию, чтобы удалить ее</li>
               </ul>
             </div>
           )}
         </aside>
-
-        {/* CANVAS AREA */}
         <div
           ref={containerRef}
           className="w-full md:w-2/3 h-[500px] relative bg-[#f0f7ff] overflow-hidden"
@@ -553,7 +470,6 @@ const FlowDiagram: React.FC = () => {
             </svg>
           </div>
 
-          {/* The scrollable area for shapes */}
           <div
             ref={canvasRef}
             className="absolute inset-0 overflow-auto touch-auto"
@@ -562,11 +478,9 @@ const FlowDiagram: React.FC = () => {
             onClick={cancelLineCreation}
             onTouchEnd={cancelLineCreation}
           >
-            {/* LINES SVG */}
             <svg className="absolute inset-0" width="100%" height="100%">
               {lines.map((line) => (
                 <g key={line.id}>
-                  {/* Clickable hit area (invisible but thicker line) */}
                   <line
                     id={`hitarea-${line.id}`}
                     x1="0"
@@ -578,7 +492,6 @@ const FlowDiagram: React.FC = () => {
                     className="cursor-pointer"
                     onClick={(e) => deleteLine(line.id, e)}
                   />
-                  {/* Visible line */}
                   <line
                     id={`line-${line.id}`}
                     x1="0"
@@ -592,7 +505,6 @@ const FlowDiagram: React.FC = () => {
                 </g>
               ))}
 
-              {/* Temporary line while creating a connection */}
               {isCreatingLine && (
                 <line
                   id="temp-line"
@@ -614,7 +526,6 @@ const FlowDiagram: React.FC = () => {
               )}
             </svg>
 
-            {/* SHAPES SVG */}
             <svg
               className="absolute inset-0 pointer-events-none"
               width="100%"
@@ -630,10 +541,7 @@ const FlowDiagram: React.FC = () => {
                   className="cursor-move pointer-events-auto"
                   onDoubleClick={(e) => deleteShape(shape.id, e)}
                 >
-                  {/* The shape itself (rect) */}
                   {renderShapeByType(shape.type)}
-
-                  {/* The shape’s label */}
                   <text
                     x="40"
                     y="30"
@@ -644,8 +552,6 @@ const FlowDiagram: React.FC = () => {
                   >
                     {shape.type}
                   </text>
-
-                  {/* Optional: delete "X" button in the corner */}
                   <g className="opacity-0 hover:opacity-100 transition-opacity">
                     <circle cx="75" cy="8" r="7" fill="#ff4d4f" />
                     <text
@@ -658,8 +564,6 @@ const FlowDiagram: React.FC = () => {
                       ✕
                     </text>
                   </g>
-
-                  {/* Connection ports (left/right) */}
                   <circle
                     cx="0"
                     cy="25"
