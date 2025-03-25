@@ -79,7 +79,6 @@ export default function Home() {
         </h2>
 
         <div className="flex flex-col lg:flex-row gap-8 items-start mb-16">
-          {/* Features*/}
           <div className="flex-1">
             <div className="space-y-6">
               {/* Feature*/}
@@ -96,8 +95,6 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-
-              {/* Feature 2 */}
               <div className="flex gap-4">
                 <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
                 <span className="text-purple-600 text-3xl">✓</span>

@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
                 <h3 className="text-lg font-normal mb-3 uppercase">
                   {t('footer.contacts')}
                 </h3>
-                <p className="mb-1 font-normal">+7 (999) 999-99-99</p>
+                <p className="mb-1 font-normal whitespace-nowrap">+7 (999) 999-99-99</p>
                 <p className="mb-1 font-normal">hello@nntrack.ru</p>
               </div>
               {/* Site Sections */}

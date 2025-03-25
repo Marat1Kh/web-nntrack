@@ -4,19 +4,19 @@ const en = {
     competitions: "Competitions",
     approbation: "Approbation",
     knowledgeBase: "Knowledge Base",
-    whatsNew: "What's New",
+    whatsNew: "Patchnotes",
     faq: "FAQ"
   },
   
   // Footer
   footer: {
-    socialNetworks: "Our Social Networks",
+    socialNetworks: "Socials",
     contacts: "Contacts",
-    siteSections: "Site Sections",
-    homePage: "Home Page",
+    siteSections: "Sections",
+    homePage: "Home",
     copyright: "Brain Development LLC. 2025. All rights reserved"
   },
-
+  
   useCases: {
     title: "Use Cases",
     desktop: {
@@ -144,14 +144,22 @@ const en = {
   approbation: {
     title: "Approbation",
     description: "Currently, NNTrack software is undergoing and conducting approbation in the following institutions:",
-    institution: "Institution",
+    institution: "Institutions",
     moreDetails: "More Details",
     features: {
       intuitive: "Intuitive Interface",
-      flexibility: "Settings Flexibility",
+      flexibility: "Flexible Configuration",
       accessibility: "Accessibility",
-      variety: "Variety of Tools",
+      variety: "Tool Variety",
       performance: "High Performance"
+    },
+    instructions: {
+      addShape: "Click on a shape to add it to the canvas",
+      dragShapes: "Drag shapes to position them",
+      connectPorts: "Click on port circles to create connections",
+      deleteDesktop: "On desktop, double-click to delete a shape",
+      deleteMobile: "On mobile, use the always-visible delete button",
+      deleteLine: "Click on a line to delete it"
     }
   },
   

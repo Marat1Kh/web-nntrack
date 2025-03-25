@@ -42,6 +42,9 @@ const FlowDiagram: React.FC = () => {
 
   const [activePanel, setActivePanel] = useState("shapes");
 
+  // Determine if mobile based on window width.
+  const isMobile = windowSize.width < 768;
+
   useEffect(() => {
     function handleResize() {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
@@ -93,7 +96,7 @@ const FlowDiagram: React.FC = () => {
   };
 
   const updateLines = () => {
-  const allElementsExist = lines.every((line) =>
+    const allElementsExist = lines.every((line) =>
       document.getElementById(`line-${line.id}`)
     );
     if (!allElementsExist) {
@@ -188,6 +191,7 @@ const FlowDiagram: React.FC = () => {
     });
   };
 
+  // Update temporary line position and prevent default touch behavior on mobile.
   const updateTempLine = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isCreatingLine) return;
 
@@ -196,6 +200,7 @@ const FlowDiagram: React.FC = () => {
 
     let clientX, clientY;
     if ("touches" in e) {
+      e.preventDefault(); // Prevent default scrolling on mobile
       clientX = e.touches[0].clientX;
       clientY = e.touches[0].clientY;
     } else {
@@ -250,6 +255,7 @@ const FlowDiagram: React.FC = () => {
     e.stopPropagation();
     setLines((prev) => prev.filter((line) => line.id !== lineId));
   };
+
   const cancelLineCreation = () => {
     setIsCreatingLine(null);
   };
@@ -306,6 +312,7 @@ const FlowDiagram: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [shapes, lines]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       updateLines();
@@ -420,12 +427,12 @@ const FlowDiagram: React.FC = () => {
           {activePanel === "instructions" && (
             <div className="text-ellipsis text-xs md:text-sm text-purple-100 bg-purple-700 p-3 md:p-4 rounded-lg shadow-inner">
               <ul className="space-y-1 md:space-y-2 list-disc pl-4">
-                <li>Нажмите на фигуру, чтобы добавить ее на холст</li>
-                <li>Перетаскивайте фигуры, чтобы разместить их</li>
-                <li>Нажмите на кружки портов для создания соединений</li>
-                <li>Дважды щелкните по фигуре, чтобы удалить ее и ее соединения</li>
-                <li>Наведите курсор на фигуру, чтобы увидеть кнопку удаления</li>
-                <li>Нажмите на линию, чтобы удалить ее</li>
+                <li>{t('approbation.instructions.addShape')}</li>
+                <li>{t('approbation.instructions.dragShapes')}</li>
+                <li>{t('approbation.instructions.connectPorts')}</li>
+                <li>{t('approbation.instructions.deleteDesktop')}</li>
+                <li>{t('approbation.instructions.deleteMobile')}</li>
+                <li>{t('approbation.instructions.deleteLine')}</li>
               </ul>
             </div>
           )}
@@ -472,7 +479,8 @@ const FlowDiagram: React.FC = () => {
 
           <div
             ref={canvasRef}
-            className="absolute inset-0 overflow-auto touch-auto"
+            style={{ touchAction: "none" }}
+            className="absolute inset-0 overflow-auto"
             onMouseMove={updateTempLine}
             onTouchMove={updateTempLine}
             onClick={cancelLineCreation}
@@ -546,21 +554,25 @@ const FlowDiagram: React.FC = () => {
                     x="40"
                     y="30"
                     textAnchor="middle"
-                    fontSize={windowSize.width < 768 ? "10" : "12"}
+                    fontSize={isMobile ? "10" : "12"}
                     fontFamily="sans-serif"
                     fontWeight="bold"
                   >
                     {shape.type}
                   </text>
-                  <g className="opacity-0 hover:opacity-100 transition-opacity">
+                  <g
+                    className={
+                      isMobile
+                        ? "opacity-100"
+                        : "opacity-0 hover:opacity-100 transition-opacity"
+                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteShape(shape.id, e);
+                    }}
+                  >
                     <circle cx="75" cy="8" r="7" fill="#ff4d4f" />
-                    <text
-                      x="75"
-                      y="11"
-                      fontSize="10"
-                      fill="white"
-                      textAnchor="middle"
-                    >
+                    <text x="75" y="11" fontSize="10" fill="white" textAnchor="middle">
                       ✕
                     </text>
                   </g>
@@ -576,7 +588,7 @@ const FlowDiagram: React.FC = () => {
                         ? finishConnection(shape.id, "left")
                         : startConnection(shape.id, "left", e);
                     }}
-                    onTouchEnd={(e) => {
+                    onTouchStart={(e) => {
                       e.stopPropagation();
                       isCreatingLine
                         ? finishConnection(shape.id, "left")
@@ -595,7 +607,7 @@ const FlowDiagram: React.FC = () => {
                         ? finishConnection(shape.id, "right")
                         : startConnection(shape.id, "right", e);
                     }}
-                    onTouchEnd={(e) => {
+                    onTouchStart={(e) => {
                       e.stopPropagation();
                       isCreatingLine
                         ? finishConnection(shape.id, "right")

@@ -25,7 +25,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full bg-black text-white py-4 relative">
+    <nav className="w-full bg-black text-white py-4 px-4 md:px-0 relative">
       <Container>
         <div className="flex items-center justify-between">
           {/* Logo */}

@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
-          src="https://api-maps.yandex.ru/v3/?apikey=API_KEY&lang=ru_RU"
+          src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY_HERE&lang=ru_RU"
           strategy="beforeInteractive"
         />
       </head>

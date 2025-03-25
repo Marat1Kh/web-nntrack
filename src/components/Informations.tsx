@@ -73,7 +73,7 @@ export default function Information() {
             </div>
 
      
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2 ">
               <h2 className="text-center bg-purple-500 text-xl font-semibold rounded-md p-3 text-white">
                 {t("useCases.robots.title")}
               </h2>
@@ -101,7 +101,7 @@ export default function Information() {
                 </div>
 
                 <div className="flex flex-col gap-4 p-4">
-                  <div className="text-center">
+            <div className="text-center">
                     <img
                       src="../robot.png"
                       alt="Mobile Robot"
@@ -121,12 +121,12 @@ export default function Information() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+                            </div>
+                        </div>
+                    </div>
 
       <div className="w-full">
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-4 mb-6 p-4">
           <div className="bg-purple-600 text-white px-4 py-2 rounded-lg">
             20 {t("information.lessons")}
           </div>
@@ -135,7 +135,7 @@ export default function Information() {
           </h4>
         </div>
 
-        <div className="space-y-4 mb-8">
+        <div className="space-y-4 mb-8 p-4">
           <div className="flex items-start gap-2">
             <span className="text-purple-600 text-xl">✓</span>
             <p>{t("information.course.convolutionalNN.point1")}</p>
@@ -177,7 +177,7 @@ export default function Information() {
 
       <div className="mt-12">
         <div className="w-full">
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-6 p-4">
             <div className="bg-purple-600 text-white px-4 py-2 rounded-lg">
               21 {t("information.lessons")}
             </div>
@@ -186,7 +186,7 @@ export default function Information() {
             </h4>
           </div>
 
-          <div className="space-y-4 mb-8">
+          <div className="space-y-4 mb-8 p-4">
             <div className="flex items-start gap-2">
               <span className="text-purple-600 text-xl">✓</span>
               <p>{t("information.course.aiBasics.point1")}</p>
@@ -216,14 +216,14 @@ export default function Information() {
                     >
                       <path d="M12 6v-2m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                     </svg>
-                  </div>
+                    </div>
                   <span className="text-sm">
                     {t(`information.course.aiBasics.topics.${index + 1}`)}
                   </span>
                 </div>
               ))}
+                </div>
             </div>
-          </div>
         </div>
       </div>
     </div>

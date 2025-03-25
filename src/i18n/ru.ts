@@ -4,13 +4,13 @@ const ru = {
     competitions: "Соревнования",
     approbation: "Апробация",
     knowledgeBase: "База знаний",
-    whatsNew: "Что нового",
+    whatsNew: "Патчноуты",
     faq: "FAQ"
   },
   
   // Footer
   footer: {
-    socialNetworks: "Наши соцсети",
+    socialNetworks: "Соцсети",
     contacts: "Контакты",
     siteSections: "Разделы сайта",
     homePage: "Главная страница",
@@ -108,6 +108,14 @@ const ru = {
       accessibility: "Доступность",
       variety: "Разнообразие инструментов",
       performance: "Высокая производительность"
+    },
+    instructions: {
+      addShape: "Нажмите на фигуру, чтобы добавить ее на холст",
+      dragShapes: "Перетаскивайте фигуры, чтобы разместить их",
+      connectPorts: "Нажмите на кружки портов для создания соединений",
+      deleteDesktop: "На десктопе нажмите дважды для удаления фигуры",
+      deleteMobile: "На мобильном используйте кнопку удаления, которая видна всегда",
+      deleteLine: "Нажмите на линию, чтобы удалить ее"
     }
   },
   
