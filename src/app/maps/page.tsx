@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Container } from "@/components/Container";
-import Script from "next/script";
 
 declare global {
   interface Window {
@@ -31,7 +30,6 @@ export default function MapsPage() {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch features from data.json
   useEffect(() => {
     fetch("/data.json")
       .then((res) => res.json())
@@ -39,7 +37,7 @@ export default function MapsPage() {
       .catch((err) => console.error("Error fetching data.json:", err));
   }, []);
 
-  // Load the Yandex Maps script manually
+
   useEffect(() => {
     if (window.ymaps) {
       setIsScriptLoaded(true);
@@ -95,8 +93,10 @@ export default function MapsPage() {
 
         mapRef.current = myMap;
         setTimeout(() => {
-          myMap.container.fitToViewport();
-        }, 100);
+          if (mapRef.current) {
+            window.dispatchEvent(new Event('resize'));
+          }
+        }, 500);
       } catch (e) {
         console.error("Error initializing map:", e);
         setError("Ошибка инициализации карты. Пожалуйста, обновите страницу.");
@@ -109,32 +109,37 @@ export default function MapsPage() {
       }
     };
   }, [isScriptLoaded]);
-
-  // Combined approach: update map size when container changes or window resizes.
   useEffect(() => {
     let isMounted = true;
     let resizeObserver: ResizeObserver | null = null;
+    let resizeTimeout: NodeJS.Timeout;
 
     const updateMapSize = () => {
       if (isMounted && mapRef.current) {
-        // Use a slight delay to allow CSS transitions to complete.
-        setTimeout(() => {
+        if (resizeTimeout) {
+          clearTimeout(resizeTimeout);
+        }
+        const delay = window.innerWidth < 768 ? 300 : 100;
+        
+        resizeTimeout = setTimeout(() => {
           if (isMounted && mapRef.current) {
-            mapRef.current.container.fitToViewport();
+            try {
+              mapRef.current.container.fitToViewport();
+            } catch (error) {
+              console.error("Error fitting viewport:", error);
+            }
           }
-        }, 100);
+        }, delay);
       }
     };
-
-    // Listen for window resize and orientation change
     window.addEventListener("resize", updateMapSize);
     window.addEventListener("orientationchange", updateMapSize);
 
-    // Also observe the map container for changes (like sidebar toggling)
     if (mapContainerRef.current) {
       resizeObserver = new ResizeObserver(updateMapSize);
       resizeObserver.observe(mapContainerRef.current);
     }
+    updateMapSize();
 
     return () => {
       isMounted = false;
@@ -143,10 +148,11 @@ export default function MapsPage() {
       if (resizeObserver) {
         resizeObserver.disconnect();
       }
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
     };
   }, []);
-
-  // Clean-up on unmount
   useEffect(() => {
     return () => {
       if (mapRef.current) {
@@ -190,8 +196,8 @@ export default function MapsPage() {
               ))}
             </ol>
           </div>
-          <div className="flex w-full h-auto md:h-[500px]">
-            <div className="w-1/4 border-r border-gray-300 bg-white p-2.5 overflow-y-auto text-sm md:text-base">
+          <div className="flex flex-col md:flex-row w-full h-auto md:h-[500px]">
+            <div className="w-full md:w-1/4 border-b md:border-b-0 md:border-r border-gray-300 bg-white p-2.5 overflow-y-auto text-sm md:text-base">
               {features.map((feature) => (
                 <div
                   key={feature.id}
@@ -213,7 +219,7 @@ export default function MapsPage() {
                 </div>
               ))}
             </div>
-            <div className="w-3/4 relative min-h-[350px] md:h-full">
+            <div className="w-full md:w-3/4 relative h-[250px] md:h-full">
               {!mapRef.current && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
                   <div className="text-gray-500">
