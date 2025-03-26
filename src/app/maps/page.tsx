@@ -110,29 +110,52 @@ export default function MapsPage() {
     };
   }, [isScriptLoaded]);
 
+  // Combined approach: update map size when container changes or window resizes.
   useEffect(() => {
+    let isMounted = true;
+    let resizeObserver: ResizeObserver | null = null;
+
     const updateMapSize = () => {
-      if (mapRef.current) {
+      if (isMounted && mapRef.current) {
+        // Use a slight delay to allow CSS transitions to complete.
         setTimeout(() => {
-          mapRef.current.container.fitToViewport();
+          if (isMounted && mapRef.current) {
+            mapRef.current.container.fitToViewport();
+          }
         }, 100);
       }
     };
 
+    // Listen for window resize and orientation change
     window.addEventListener("resize", updateMapSize);
     window.addEventListener("orientationchange", updateMapSize);
 
-    let resizeObserver: ResizeObserver | null = null;
+    // Also observe the map container for changes (like sidebar toggling)
     if (mapContainerRef.current) {
       resizeObserver = new ResizeObserver(updateMapSize);
       resizeObserver.observe(mapContainerRef.current);
     }
 
     return () => {
+      isMounted = false;
       window.removeEventListener("resize", updateMapSize);
       window.removeEventListener("orientationchange", updateMapSize);
       if (resizeObserver) {
         resizeObserver.disconnect();
+      }
+    };
+  }, []);
+
+  // Clean-up on unmount
+  useEffect(() => {
+    return () => {
+      if (mapRef.current) {
+        try {
+          mapRef.current.destroy();
+          mapRef.current = null;
+        } catch (error) {
+          console.error("Error destroying map:", error);
+        }
       }
     };
   }, []);

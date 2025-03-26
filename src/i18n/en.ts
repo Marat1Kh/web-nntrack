@@ -146,6 +146,10 @@ const en = {
     description: "Currently, NNTrack software is undergoing and conducting approbation in the following institutions:",
     institution: "Institutions",
     moreDetails: "More Details",
+    buttons: {
+      shapes: "Shapes",
+      instructions: "Instructions"
+    },
     features: {
       intuitive: "Intuitive Interface",
       flexibility: "Flexible Configuration",

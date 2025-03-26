@@ -102,6 +102,10 @@ const ru = {
     description: "На данный момент программное обеспечение NNTrack проходит и проводит апробацию в следующих учреждениях:",
     institution: "Учреждения",
     moreDetails: "Подробнее",
+    buttons: {
+      shapes: "Фигурки",
+      instructions: "Инструкции"
+    },
     features: {
       intuitive: "Интуитивный интерфейс",
       flexibility: "Гибкость настройки",
