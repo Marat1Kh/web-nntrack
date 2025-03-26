@@ -41,8 +41,6 @@ const FlowDiagram: React.FC = () => {
   };
 
   const [activePanel, setActivePanel] = useState("shapes");
-
-  // Determine if mobile based on window width.
   const isMobile = windowSize.width < 768;
 
   useEffect(() => {
@@ -190,8 +188,6 @@ const FlowDiagram: React.FC = () => {
       currentPos: { x: portPos.x, y: portPos.y },
     });
   };
-
-  // Update temporary line position and prevent default touch behavior on mobile.
   const updateTempLine = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isCreatingLine) return;
 
@@ -200,7 +196,7 @@ const FlowDiagram: React.FC = () => {
 
     let clientX, clientY;
     if ("touches" in e) {
-      e.preventDefault(); // Prevent default scrolling on mobile
+      e.preventDefault();
       clientX = e.touches[0].clientX;
       clientY = e.touches[0].clientY;
     } else {
@@ -350,7 +346,6 @@ const FlowDiagram: React.FC = () => {
       </div>
 
       <div className="flex flex-col md:flex-row w-full h-[500px]">
-        {/* SIDEBAR */}
         <aside
           className={`h-full bg-purple-700 shadow-lg transition-all duration-300 z-40
             ${
@@ -369,7 +364,7 @@ const FlowDiagram: React.FC = () => {
               }`}
               onClick={() => setActivePanel("shapes")}
             >
-              {t("approbation.buttons.shapes")}
+              Фигурки
             </button>
             <button
               className={`text-md font-medium text-white px-4 py-2 rounded-lg transition-all ${
@@ -379,11 +374,9 @@ const FlowDiagram: React.FC = () => {
               }`}
               onClick={() => setActivePanel("instructions")}
             >
-              {t("approbation.buttons.instructions")}
+              Инструкции
             </button>
           </div>
-
-          {/* Shapes Panel */}
           {activePanel === "shapes" && (
             <ul className="space-y-3 overflow-y-auto mx-3">
               {[

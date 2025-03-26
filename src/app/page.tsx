@@ -157,7 +157,9 @@ export default function Home() {
         </div> 
           <div className="w-full">
             <div className="flex flex-col gap-8 ">
-              <FlowDiagram />
+              <div className="hidden md:block">
+                <FlowDiagram />
+              </div>
               <Information/>
             </div>
           </div>
