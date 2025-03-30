@@ -13,9 +13,7 @@ export const Footer: React.FC = () => {
     <footer className="bg-black text-white py-8">
       <Container>
         <div className="flex flex-col">
-          {/* Top Section */}
           <div className="flex flex-col md:flex-row mb-10 items-center md:items-start">
-            {/* Logo */}
             <div className="mb-8 md:mb-0 flex-shrink-0 mx-auto md:mx-0">
               <Image
                 src="/nntrackk.png"
@@ -28,7 +26,6 @@ export const Footer: React.FC = () => {
             </div>
             <div className="hidden md:block w-[133px]"></div>
 
-            {/* Info Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 flex-1">
               {/* Social Networks */}
               <div className="text-center md:text-left md:pr-[105px]">
@@ -65,7 +62,6 @@ export const Footer: React.FC = () => {
                 <p className="mb-1 font-normal whitespace-nowrap">+7 (999) 999-99-99</p>
                 <p className="mb-1 font-normal">hello@nntrack.ru</p>
               </div>
-              {/* Site Sections */}
               <div className="text-center md:text-left">
                 <h3 className="text-lg font-normal mb-3 uppercase">
                   {t('footer.siteSections')}

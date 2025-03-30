@@ -328,19 +328,19 @@ const FlowDiagram: React.FC = () => {
         </button>
       </div>
       <div className="hidden md:flex w-1/4 h-[500px] flex-col justify-between gap-7">
-        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-base">
+        <div className="bg-[#9465ED] rounded-lg py-4 px-6 text-white text-center font-medium text-base">
           {t("approbation.features.intuitive")}
         </div>
-        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-base">
+        <div className="bg-[#9465ED] rounded-lg py-4 px-6 text-white text-center font-medium text-base">
           {t("approbation.features.flexibility")}
         </div>
-        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-base">
+        <div className="bg-[#9465ED] rounded-lg py-4 px-6 text-white text-center font-medium text-base">
           {t("approbation.features.accessibility")}
         </div>
-        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-base">
+        <div className="bg-[#9465ED] rounded-lg py-4 px-6 text-white text-center font-medium text-base">
           {t("approbation.features.variety")}
         </div>
-        <div className="bg-purple-500 rounded-lg py-4 px-6 text-white text-center font-medium text-base">
+        <div className="bg-[#9465ED] rounded-lg py-4 px-6 text-white text-center font-medium text-base">
           {t("approbation.features.performance")}
         </div>
       </div>

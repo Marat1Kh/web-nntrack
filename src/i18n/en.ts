@@ -87,59 +87,6 @@ const en = {
     }
   },
   
-  // FAQ
-  faq: {
-    title: "Frequently Asked Questions",
-    searchPlaceholder: "Write your question",
-    questions: [
-      {
-        id: 1,
-        question: "What is NNTrack and what is it used for?",
-        answer: "NNTrack is a visual modeling, training, and export environment for neural networks. It is designed to simplify the neural network development process without the need for programming, with subsequent use on hardware modules."
-      },
-      {
-        id: 2,
-        question: "What are the minimum system requirements for NNTrack?",
-        answer: "Processor: x64, ≥ 2GHz\nRAM: ≥ 4GB\nOS: Windows 10"
-      },
-      {
-        id: 3,
-        question: "Is a graphics card required for NNTrack to work?",
-        answer: "No, neural networks can be trained on the CPU."
-      },
-      {
-        id: 4,
-        question: "Can I use NNTrack without programming skills?",
-        answer: "Yes, the program is designed to work without programming, using a visual interface for creating and training neural networks."
-      },
-      {
-        id: 5,
-        question: "Which machine learning library is NNTrack based on?",
-        answer: "TensorFlow (Keras)"
-      },
-      {
-        id: 6,
-        question: "What types of neural networks can be implemented in NNTrack?",
-        answer: "Neural networks such as VGG, ResNet, YOLA and other types of convolutional neural networks."
-      },
-      {
-        id: 7,
-        question: "In what formats can the trained model be exported?",
-        answer: "ONNX, TFLite, HDF5, SavedModel."
-      },
-      {
-        id: 8,
-        question: "Which robots can be controlled using neural networks with NNTrack?",
-        answer: "Arduino-like controllers can be connected via COM port, and the neural network results will be transmitted to the controller."
-      },
-      {
-        id: 9,
-        question: "(API) How do I get neural network output data for use in my program?",
-        answer: "When opening testing (webcam or image), a virtual server is launched to which data from the neural network is sent. By default, the sending address is http://127.0.0.1:8081/results. You can change the address in the program settings."
-      }
-    ]
-  },
-  
   // Maps
   approbation: {
     title: "Approbation",
@@ -209,6 +156,29 @@ const en = {
           7: "Neural networks and face recognition. FaceNet neural networks",
           8: "Introduction to Natural Language Processing (NLP)"
         }
+      }
+    }
+  },
+  
+  home: {
+    title: "Neural Network Track is a visual modeling environment for convolutional neural network architecture, its training and export for subsequent use on Artintrek hardware module",
+    whatNNTrackDoes: "What NNTrack does:",
+    features: {
+      visualModeling: {
+        title: "Visual modeling",
+        description: "You build a model by placing different blocks on the screen, like assembling a puzzle"
+      },
+      modelTraining: {
+        title: "Model training",
+        description: "You configure neural network training parameters, and NNTrack handles the complex task of training the model on your data"
+      },
+      modelTesting: {
+        title: "Model testing",
+        description: "NNTrack allows you to test trained models directly in the interface, ensuring ease and efficiency of work"
+      },
+      modelExport: {
+        title: "Model export",
+        description: "After training, the model can be used in other applications, on the special Artintrek device and on other domestic platforms"
       }
     }
   }

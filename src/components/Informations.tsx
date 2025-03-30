@@ -1,4 +1,6 @@
 import { useLanguage } from "@/context/LanguageContext";
+import Image from "next/image";
+
 export default function Information() {
   const { t } = useLanguage();
 
@@ -14,7 +16,7 @@ export default function Information() {
           <div className="flex flex-col md:flex-row w-full justify-between gap-4">
            
             <div className="w-full md:w-1/2">
-              <h2 className="text-center bg-purple-500 text-xl font-semibold rounded-md p-3 text-white">
+              <h2 className="text-center bg-[#9465ED] text-xl font-semibold rounded-md p-3 text-white">
                 {t("useCases.desktop.title")}
               </h2>
 
@@ -74,7 +76,7 @@ export default function Information() {
 
      
             <div className="w-full md:w-1/2 ">
-              <h2 className="text-center bg-purple-500 text-xl font-semibold rounded-md p-3 text-white">
+              <h2 className="text-center bg-[#9465ED] text-xl font-semibold rounded-md p-3 text-white">
                 {t("useCases.robots.title")}
               </h2>
 
@@ -127,7 +129,7 @@ export default function Information() {
 
       <div className="w-full">
         <div className="flex items-center gap-4 mb-6 p-4">
-          <div className="bg-purple-600 text-white px-4 py-2 rounded-lg">
+          <div className="bg-[#9465ED] text-white px-4 py-2 rounded-lg">
             20 {t("information.lessons")}
           </div>
           <h4 className="text-xl font-semibold">
@@ -148,7 +150,7 @@ export default function Information() {
 
         <div className="relative border-2 border-purple-400 rounded-[2rem] p-8">
           <div className="absolute -top-0.5 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="bg-purple-500 text-white px-8 py-1.5 rounded-full text-center min-w-[140px]">
+            <div className="bg-[#9465ED] text-white px-8 py-1.5 rounded-full text-center min-w-[140px]">
               <h5 className="text-base font-semibold">
                 {t("information.exampleTopics")}
               </h5>
@@ -158,13 +160,14 @@ export default function Information() {
             {Array.from({ length: 8 }).map((_, index) => (
               <div key={index} className="flex items-center gap-2">
                 <div className="p-2 bg-purple-100 rounded-lg">
-                  <svg
-                    className="w-5 h-5 text-purple-600"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M12 6v-2m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                  </svg>
+                  <Image
+                    src="/bolt.png"
+                    alt="Bolt icon"
+                    width={20}
+                    height={20}
+                    className="text-purple-600"
+                    style={{ width: '20px', height: '20px' }}
+                  />
                 </div>
                 <span className="text-sm">
                   {t(`information.course.convolutionalNN.topics.${index + 1}`)}
@@ -178,7 +181,7 @@ export default function Information() {
       <div className="mt-12">
         <div className="w-full">
           <div className="flex items-center gap-4 mb-6 p-4">
-            <div className="bg-purple-600 text-white px-4 py-2 rounded-lg">
+            <div className="bg-[#9465ED] text-white px-4 py-2 rounded-lg">
               21 {t("information.lessons")}
             </div>
             <h4 className="text-xl font-semibold">
@@ -199,7 +202,7 @@ export default function Information() {
 
           <div className="relative border-2 border-purple-400 rounded-[2rem] p-8">
             <div className="absolute -top-0.5 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div className="bg-purple-500 text-white px-8 py-1.5 rounded-full text-center min-w-[140px]">
+              <div className="bg-[#9465ED] text-white px-8 py-1.5 rounded-full text-center min-w-[140px]">
                 <h5 className="text-base font-semibold">
                   {t("information.exampleTopics")}
                 </h5>
@@ -209,18 +212,19 @@ export default function Information() {
               {Array.from({ length: 8 }).map((_, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <div className="p-2 bg-purple-100 rounded-lg">
-                    <svg
-                      className="w-5 h-5 text-purple-600"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M12 6v-2m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                    </svg>
-                    </div>
+                    <Image
+                      src="/bolt.png"
+                      alt="Bolt icon"
+                      width={20}
+                      height={20}
+                      className="text-purple-600"
+                      style={{ width: '20px', height: '20px' }}
+                    />
+                  </div>
                   <span className="text-sm">
                     {t(`information.course.aiBasics.topics.${index + 1}`)}
                   </span>
-                </div>
+                    </div>
               ))}
                 </div>
             </div>
