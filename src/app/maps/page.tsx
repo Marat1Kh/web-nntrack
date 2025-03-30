@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Container } from '@/components/Container';
-import Script from "next/script";
+import { Container } from "@/components/Container";
 
 declare global {
   interface Window {
@@ -11,151 +10,224 @@ declare global {
 }
 
 interface Feature {
-  type: string;
   id: number;
   geometry: {
     type: string;
     coordinates: [number, number];
   };
-  properties: Record<string, any>;
+  properties: {
+    balloonContentHeader: string;
+    balloonContentBody: string;
+    clusterCaption: string;
+    hintContent: string;
+  };
 }
 
 export default function MapsPage() {
   const [features, setFeatures] = useState<Feature[]>([]);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
-  const objectManagerRef = useRef<any>(null);
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/data.json")
       .then((res) => res.json())
-      .then((data) => {
-        setFeatures(data.features || []);
-      })
+      .then((data) => setFeatures(data.features || []))
       .catch((err) => console.error("Error fetching data.json:", err));
   }, []);
+
+
   useEffect(() => {
-    if (!window.ymaps || mapRef.current) return;
+    if (window.ymaps) {
+      setIsScriptLoaded(true);
+      return;
+    }
+    const script = document.createElement("script");
+    script.src =
+      "https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY_HERE&lang=ru_RU";
+    script.async = true;
+    script.onload = () => setIsScriptLoaded(true);
+    script.onerror = () => {
+      console.error("Failed to load Yandex Maps script");
+      setError("Ошибка загрузки карты. Пожалуйста, обновите страницу.");
+    };
+    document.head.appendChild(script);
+  }, []);
+  useEffect(() => {
+    if (
+      !isScriptLoaded ||
+      !window.ymaps ||
+      mapRef.current ||
+      !mapContainerRef.current
+    )
+      return;
 
-    window.ymaps.ready(() => {
-      if (!mapContainerRef.current) return;
-      const myMap = new window.ymaps.Map(
-        mapContainerRef.current,
-        {
-          center: [55.76, 37.64],
-          zoom: 10,
-        },
-        {
-          searchControlProvider: "yandex#search",
-        }
-      );
-      const objectManager = new window.ymaps.ObjectManager({
-        clusterize: true,
-        gridSize: 32,
-        clusterDisableClickZoom: true,
-      });
-      objectManager.objects.options.set("preset", "islands#greenDotIcon");
-      objectManager.clusters.options.set("preset", "islands#greenClusterIcons");
-      myMap.geoObjects.add(objectManager);
-      fetch("/data.json")
-        .then((res) => res.json())
-        .then((data) => {
-          objectManager.add(data);
-        })
-        .catch((err) => console.error("Error fetching data.json:", err));
-      mapRef.current = myMap;
-      objectManagerRef.current = objectManager;
-      const resizeHandler = () => {
-        if (mapRef.current) {
-          mapRef.current.container.fitToViewport();
-        }
-      };
-      window.addEventListener('resize', resizeHandler);
-      return () => {
-        window.removeEventListener('resize', resizeHandler);
-      };
+    window.ymaps.ready().then(() => {
+      try {
+        const myMap = new window.ymaps.Map(mapContainerRef.current, {
+          center: [59.0, 32.0],
+          zoom: 6,
+          controls: ["zoomControl", "fullscreenControl"],
+        });
+
+        const objectManager = new window.ymaps.ObjectManager({
+          clusterize: true,
+          gridSize: 32,
+          clusterDisableClickZoom: true,
+        });
+
+        objectManager.objects.options.set("preset", "islands#violetDotIcon");
+        objectManager.clusters.options.set("preset", "islands#violetClusterIcons");
+
+        myMap.geoObjects.add(objectManager);
+        fetch("/data.json")
+          .then((res) => res.json())
+          .then((data) => {
+            objectManager.add(data);
+          })
+          .catch((err) => {
+            console.error("Error loading data:", err);
+            setError("Ошибка загрузки данных. Пожалуйста, обновите страницу.");
+          });
+
+        mapRef.current = myMap;
+        setTimeout(() => {
+          if (mapRef.current) {
+            window.dispatchEvent(new Event('resize'));
+          }
+        }, 500);
+      } catch (e) {
+        console.error("Error initializing map:", e);
+        setError("Ошибка инициализации карты. Пожалуйста, обновите страницу.");
+      }
     });
-
     return () => {
       if (mapRef.current) {
         mapRef.current.destroy();
         mapRef.current = null;
       }
     };
-  }, []);
-
-  function handleClick(feature: Feature) {
-    if (!mapRef.current || !objectManagerRef.current) return;
-    mapRef.current.setCenter(feature.geometry.coordinates, 14, { duration: 300 });
-    objectManagerRef.current.objects.balloon.open(feature.id);
-  }
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 1200
-  );
-
+  }, [isScriptLoaded]);
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
+    let isMounted = true;
+    let resizeObserver: ResizeObserver | null = null;
+    let resizeTimeout: NodeJS.Timeout;
 
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
+    const updateMapSize = () => {
+      if (isMounted && mapRef.current) {
+        if (resizeTimeout) {
+          clearTimeout(resizeTimeout);
+        }
+        const delay = window.innerWidth < 768 ? 300 : 100;
+        
+        resizeTimeout = setTimeout(() => {
+          if (isMounted && mapRef.current) {
+            try {
+              mapRef.current.container.fitToViewport();
+            } catch (error) {
+              console.error("Error fitting viewport:", error);
+            }
+          }
+        }, delay);
+      }
+    };
+    window.addEventListener("resize", updateMapSize);
+    window.addEventListener("orientationchange", updateMapSize);
+
+    if (mapContainerRef.current) {
+      resizeObserver = new ResizeObserver(updateMapSize);
+      resizeObserver.observe(mapContainerRef.current);
+    }
+    updateMapSize();
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener("resize", updateMapSize);
+      window.removeEventListener("orientationchange", updateMapSize);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
+    };
   }, []);
-  const isMobile = windowWidth < 768;
+  useEffect(() => {
+    return () => {
+      if (mapRef.current) {
+        try {
+          mapRef.current.destroy();
+          mapRef.current = null;
+        } catch (error) {
+          console.error("Error destroying map:", error);
+        }
+      }
+    };
+  }, []);
+
+  const handleClick = (feature: Feature) => {
+    if (mapRef.current) {
+      mapRef.current.setCenter(feature.geometry.coordinates, 15, {
+        duration: 500,
+      });
+    }
+  };
 
   return (
     <>
-      <Script
-        src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=64fa6e23-cbd9-4983-bbe7-67c2788eed4a"
-        strategy="beforeInteractive"
-      />
       <main className="w-full max-w-[1200px] mx-auto my-5 border border-gray-300 rounded-md overflow-hidden font-sans">
         <Container>
-          <div className={`${isMobile ? 'p-4' : 'p-5'} border-b border-gray-300 bg-white`}>
-            <h1 className={`${isMobile ? 'text-8xl' : 'text-2xl'} text-4xl mb-4 font-bold text-center`}>
+          <div className="p-4 md:p-5 border-b border-gray-300 bg-white">
+            <h1 className="text-2xl md:text-4xl mb-4 font-bold text-center">
               Апробация
             </h1>
-            <p className={`mb-2.5 ${isMobile ? 'text-sm' : 'text-base'}`}>
-              На данный момент программное обеспечение NNTrack проходит и проводит апробацию в следующих учреждениях:
+            <p className="mb-2.5 text-sm md:text-base">
+              На данный момент программное обеспечение NNTrack проходит и проводит
+              апробацию в следующих учреждениях:
             </p>
-            <ol className={`mt-2.5 ml-5 ${isMobile ? 'text-sm' : 'text-base'}`}>
-              <li>1 строчка</li>
-              <li>2 строчка</li>
-              <li>3 строчка</li>
-              <li>4 строчка</li>
-              <li>5 строчка</li>
+            <ol className="mt-2.5 ml-5 text-sm md:text-base list-decimal">
+              {features.map((feature) => (
+                <li key={feature.id} className="mb-2">
+                  {feature.properties.balloonContentBody
+                    .replace(/<[^>]*>/g, "")
+                    .replace(/\n/g, ", ")}
+                </li>
+              ))}
             </ol>
           </div>
-          
-          <div className={`flex ${isMobile ? 'flex-col h-auto' : 'flex-row h-[500px]'}`}>
-            <div className={`
-              ${isMobile ? 'w-full h-auto border-b' : 'w-[300px] h-full border-r'} 
-              border-gray-300 bg-white p-2.5 overflow-y-auto ${isMobile ? 'text-sm' : 'text-base'}
-            `}>
-              {features.map((feature, index) => (
+          <div className="flex flex-col md:flex-row w-full h-auto md:h-[500px]">
+            <div className="w-full md:w-1/4 border-b md:border-b-0 md:border-r border-gray-300 bg-white p-2.5 overflow-y-auto text-sm md:text-base">
+              {features.map((feature) => (
                 <div
                   key={feature.id}
-                  className="mb-4 p-2.5 border border-gray-100 rounded cursor-pointer bg-gray-50"
+                  className="mb-4 p-2.5 border border-gray-100 rounded cursor-pointer bg-gray-50 hover:bg-purple-50 transition-colors"
                   onClick={() => handleClick(feature)}
                 >
                   <div className="font-bold mb-1.5">
-                    Учреждения: {index + 1}
+                    {feature.properties.balloonContentHeader.replace(
+                      /<[^>]*>/g,
+                      ""
+                    )}
                   </div>
-                  <div className={`mb-1.5 ${isMobile ? 'text-xs' : ''} break-words`}>
-                    
+                  <div className="mb-1.5 text-xs md:text-base break-words">
+                    {feature.properties.balloonContentBody.replace(/<[^>]*>/g, "")}
                   </div>
-                  <div className={`text-black underline ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                  <div className="text-purple-600 hover:text-purple-800 text-xs md:text-sm">
                     Подробнее
                   </div>
                 </div>
               ))}
             </div>
-            <div className={`flex-1 relative ${isMobile ? 'h-[350px]' : 'h-full'}`}>
-              <div
-                ref={mapContainerRef}
-                className="w-full h-full"
-              />
+            <div className="w-full md:w-3/4 relative h-[250px] md:h-full">
+              {!mapRef.current && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                  <div className="text-gray-500">
+                    {error || "Загрузка карты..."}
+                  </div>
+                </div>
+              )}
+              <div ref={mapContainerRef} className="w-full h-full" />
             </div>
           </div>
         </Container>

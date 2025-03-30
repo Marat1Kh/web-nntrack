@@ -4,30 +4,34 @@ import React from 'react';
 import { Container } from '@/components/Container';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const Footer: React.FC = () => {
+  const { t } = useLanguage();
+  
   return (
     <footer className="bg-black text-white py-8">
       <Container>
         <div className="flex flex-col">
-          <div className="flex flex-col md:flex-row mb-10 items-start">
-            <div className="mb-8 md:mb-0 flex-shrink-0">
+          <div className="flex flex-col md:flex-row mb-10 items-center md:items-start">
+            <div className="mb-8 md:mb-0 flex-shrink-0 mx-auto md:mx-0">
               <Image
                 src="/nntrackk.png"
                 alt="NNTrack Logo"
                 width={300}
                 height={80}
                 style={{ objectFit: 'contain' }}
+                className="w-40 md:w-[300px] h-auto"
               />
             </div>
             <div className="hidden md:block w-[133px]"></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 flex-1">
+              {/* Social Networks */}
               <div className="text-center md:text-left md:pr-[105px]">
-              <h3 className="text-lg font-normal mb-4 uppercase whitespace-nowrap">
-                Наши соцсети
-              </h3>
-
+                <h3 className="text-lg font-normal mb-4 uppercase">
+                  {t('footer.socialNetworks')}
+                </h3>
                 <a 
                   href="https://t.me/nntrack" 
                   target="_blank" 
@@ -53,45 +57,45 @@ export const Footer: React.FC = () => {
               {/* Contacts */}
               <div className="text-center md:text-left md:pr-[115px]">
                 <h3 className="text-lg font-normal mb-3 uppercase">
-                  Контакты
+                  {t('footer.contacts')}
                 </h3>
                 <p className="mb-1 font-normal whitespace-nowrap">+7 (999) 999-99-99</p>
                 <p className="mb-1 font-normal">hello@nntrack.ru</p>
               </div>
               <div className="text-center md:text-left">
                 <h3 className="text-lg font-normal mb-3 uppercase">
-                  Разделы сайта
+                  {t('footer.siteSections')}
                 </h3>
                 <nav>
                   <ul className="space-y-1">
                     <li>
                       <Link href="/" className="text-white hover:text-gray-300 transition">
-                        Главная страница
+                        {t('footer.homePage')}
                       </Link>
                     </li>
                     <li>
                       <Link href="/competitions" className="text-white hover:text-gray-300 transition">
-                        Соревнования
+                        {t('nav.competitions')}
                       </Link>
                     </li>
                     <li>
                       <Link href="/approbation" className="text-white hover:text-gray-300 transition">
-                        Апробация
+                        {t('nav.approbation')}
                       </Link>
                     </li>
                     <li>
                       <Link href="/knowledge" className="text-white hover:text-gray-300 transition">
-                        База знаний
+                        {t('nav.knowledgeBase')}
                       </Link>
                     </li>
                     <li>
                       <Link href="/news" className="text-white hover:text-gray-300 transition">
-                        Что нового
+                        {t('nav.whatsNew')}
                       </Link>
                     </li>
                     <li>
                       <Link href="/faq" className="text-white hover:text-gray-300 transition">
-                        FAQ
+                        {t('nav.faq')}
                       </Link>
                     </li>
                   </ul>
@@ -99,11 +103,12 @@ export const Footer: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Bottom Section */}
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0 text-sm text-gray-400">
-              ООО «Брейн Девелопмент». 2025 год. Все права защищены
+              {t('footer.copyright')}
             </div>
-            
             <div>
               <Image
                 src="/robo.png"
@@ -111,6 +116,7 @@ export const Footer: React.FC = () => {
                 width={100}
                 height={40}
                 style={{ objectFit: 'contain' }}
+                className="w-20 md:w-[100px] h-auto"
               />
             </div>
           </div>

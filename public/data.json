@@ -1,10 +1,50 @@
 {
     "type": "FeatureCollection",
     "features": [
-        {"type": "Feature", "id": 0, "geometry": {"type": "Point", "coordinates": [55.831903, 37.411961]}, "properties": {"balloonContentHeader": "<font size=3><b><a target='_blank' href='https://yandex.com'>Учреждение №1</a></b></font>", "balloonContentBody": "<h1>Адрес: г. Долгопрудный, пр. Ракетостроителей, д. 5.</h1><p><em>+7 (999) 999 99 99</em></p>", "balloonContentFooter": "", "clusterCaption": "<strong><s>Another</s> one</strong> placemark", "hintContent": "<strong>Text of the  <s>hint</s></strong>"}},
-        {"type": "Feature", "id": 1, "geometry": {"type": "Point", "coordinates": [55.763338, 37.565466]}, "properties": {"balloonContentHeader": "<font size=3><b><a target='_blank' href='https://yandex.com'>Учреждение №2</a></b></font>", "balloonContentBody": "<h1>Адрес: г. Долгопрудный, пр. Ракетостроителей, д. 5.</h1><p><em>+7 (999) 999 99 99</em></p>", "balloonContentFooter": "", "clusterCaption": "<strong><s>Another</s> one</strong> placemark", "hintContent": "<strong>Text of the  <s>hint</s></strong>"}},
-        {"type": "Feature", "id": 2, "geometry": {"type": "Point", "coordinates": [55.744522, 37.616378]}, "properties": {"balloonContentHeader": "<font size=3><b><a target='_blank' href='https://yandex.com'>Учреждение №3</a></b></font>", "balloonContentBody": "<p>Адрес: г. Долгопрудный, пр. Ракетостроителей, д. 5.</p><p><em>+7 (999) 999 99 99</em></p>", "balloonContentFooter": "", "clusterCaption": "<strong><s>Another</s> one</strong> placemark", "hintContent": "<strong>Text of the  <s>hint</s></strong>"}},
-        {"type": "Feature", "id": 3, "geometry": {"type": "Point", "coordinates": [55.780898, 37.642889]}, "properties": {"balloonContentHeader": "<font size=3><b><a target='_blank' href='https://yandex.com'>Учреждение №4</a></b></font>", "balloonContentBody": "<p>Адрес: г. Долгопрудный, пр. Ракетостроителей, д. 5.</p><p><em>+7 (999) 999 99 99</em></p>", "balloonContentFooter": "", "clusterCaption": "<strong><s>Another</s> one</strong> placemark", "hintContent": "<strong>Text of the  <s>hint</s></strong>"}},
-        {"type": "Feature", "id": 4, "geometry": {"type": "Point", "coordinates": [55.793559, 37.435983]}, "properties": {"balloonContentHeader": "<font size=3><b><a target='_blank' href='https://yandex.com'>Учреждение №5</a></b></font>", "balloonContentBody": "<p>Адрес: г. Долгопрудный, пр. Ракетостроителей, д. 5.</p><p><em>+7 (999) 999 99 99</em></p>", "balloonContentFooter": "", "clusterCaption": "<strong><s>Another</s> one</strong> placemark", "hintContent": "<strong>Text of the  <s>hint</s></strong>"}}
+        {
+            "type": "Feature",
+            "id": 0,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [56.851715, 35.919217]
+            },
+            "properties": {
+                "balloonContentHeader": "<font size=3><b>Военная академия воздушно-космической обороны</b></font>",
+                "balloonContentBody": "<p>Военная академия воздушно-космической обороны имени Маршала Советского Союза Г. К. Жукова</p><p> г. Тверь</p>",
+                "balloonContentFooter": "",
+                "clusterCaption": "ВА ВКО",
+                "hintContent": "ВА ВКО"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 1,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [60.024441, 30.423543]
+            },
+            "properties": {
+                "balloonContentHeader": "<font size=3><b>ГБОУ школа №619</b></font>",
+                "balloonContentBody": "<p>Государственное бюджетное общеобразовательное учреждение средняя общеобразовательная школа №619 Калининского района Санкт-Петербурга</p><p>г. Санкт-Петербург</p>",
+                "balloonContentFooter": "",
+                "clusterCaption": "ГБОУ школа №619",
+                "hintContent": "ГБОУ школа №619"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 2,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [59.866703, 30.446397]
+            },
+            "properties": {
+                "balloonContentHeader": "<font size=3><b>ГБОУ школа №334</b></font>",
+                "balloonContentBody": "<p>ГБОУ школа №334 Невского района Санкт-Петербурга</p><p>г. Санкт-Петербург</p>",
+                "balloonContentFooter": "",
+                "clusterCaption": "ГБОУ школа №334",
+                "hintContent": "ГБОУ школа №334"
+            }
+        }
     ]
 }
