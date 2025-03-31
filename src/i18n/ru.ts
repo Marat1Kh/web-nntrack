@@ -111,7 +111,9 @@ const ru = {
       flexibility: "Гибкость настройки",
       accessibility: "Доступность",
       variety: "Разнообразие инструментов",
-      performance: "Высокая производительность"
+      performance: "Высокая производительность",
+      figures: "Фигурки",
+      instructions: "Инструкции"
     },
     instructions: {
       addShape: "Нажмите на фигуру, чтобы добавить ее на холст",

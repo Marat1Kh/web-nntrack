@@ -364,7 +364,7 @@ const FlowDiagram: React.FC = () => {
               }`}
               onClick={() => setActivePanel("shapes")}
             >
-              Фигурки
+                {t("approbation.features.figures")}
             </button>
             <button
               className={`text-md font-medium text-white px-4 py-2 rounded-lg transition-all ${
@@ -374,7 +374,7 @@ const FlowDiagram: React.FC = () => {
               }`}
               onClick={() => setActivePanel("instructions")}
             >
-              Инструкции
+                {t("approbation.features.instructions")}
             </button>
           </div>
           {activePanel === "shapes" && (

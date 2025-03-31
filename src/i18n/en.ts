@@ -102,7 +102,9 @@ const en = {
       flexibility: "Flexible Configuration",
       accessibility: "Accessibility",
       variety: "Tool Variety",
-      performance: "High Performance"
+      performance: "High Performance",
+      figures: "Figures",
+      instructions: "Instructions"
     },
     instructions: {
       addShape: "Click on a shape to add it to the canvas",
